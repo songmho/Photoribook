@@ -29,7 +29,7 @@ public class LoginActivity extends AppCompatActivity {
                 id_text.getText().toString();
                 pass_text.getText().toString();
                 Toast.makeText(LoginActivity.this, "로그인 성공~", Toast.LENGTH_SHORT).show();
-                startActivity(new Intent(LoginActivity.this, MainActivity.class));
+                startActivity(new Intent(LoginActivity.this, SignupActivity.class));
                 finish();
             }
         });
