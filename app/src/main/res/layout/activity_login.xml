@@ -46,6 +46,7 @@
             android:inputType="text"
             android:id="@+id/pass_text"
             android:textSize="15dp"/>
+
     </LinearLayout>
     <Button
         android:layout_marginTop="20dp"
