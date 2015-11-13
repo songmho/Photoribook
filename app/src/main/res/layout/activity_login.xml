@@ -5,13 +5,18 @@
     android:layout_width="match_parent"
     android:layout_height="match_parent"
     android:gravity="center">
-    <TextView
-        android:layout_width="wrap_content"
+    <LinearLayout
+        android:layout_width="match_parent"
         android:layout_height="wrap_content"
-        android:text="ID"
-        android:textColor="@color/colorPrimary"
-        android:fontFamily="sans-serif-thin"
-        android:textSize="30dp"/>
+        android:orientation="horizontal"
+        android:gravity="center">
+        <TextView
+            android:layout_width="50dp"
+            android:layout_height="wrap_content"
+            android:text="ID"
+            android:textColor="@color/colorPrimary"
+            android:fontFamily="sans-serif-thin"
+            android:textSize="30dp"/>
         <EditText
             android:layout_width="250dp"
             android:layout_height="wrap_content"
@@ -19,22 +24,35 @@
             android:inputType="text"
             android:id="@+id/id_text"
             android:textSize="15dp"/>
-    <TextView
-        android:layout_width="wrap_content"
-        android:layout_height="wrap_content"
-        android:text="PW"
-        android:textColor="@color/colorPrimary"
-        android:fontFamily="sans-serif-thin"
-        android:textSize="30dp"/>
-    <EditText
-        android:layout_width="250dp"
-        android:layout_height="wrap_content"
-        android:hint="비밀번호"
-        android:inputType="text"
-        android:id="@+id/pass_text"
-        android:textSize="15dp"/>
-    <Button
+    </LinearLayout>
+
+    <LinearLayout
         android:layout_width="match_parent"
-        android:layout_height="20dp"
-        android:id="@+id/button"/>
+        android:layout_height="wrap_content"
+        android:orientation="horizontal"
+        android:gravity="center">
+
+        <TextView
+            android:layout_width="50dp"
+            android:layout_height="wrap_content"
+            android:text="PW"
+            android:textColor="@color/colorPrimary"
+            android:fontFamily="sans-serif-thin"
+            android:textSize="30dp"/>
+        <EditText
+            android:layout_width="250dp"
+            android:layout_height="wrap_content"
+            android:hint="비밀번호"
+            android:inputType="text"
+            android:id="@+id/pass_text"
+            android:textSize="15dp"/>
+    </LinearLayout>
+    <Button
+        android:layout_marginTop="20dp"
+        android:layout_width="310dp"
+        android:layout_height="45dp"
+        android:id="@+id/login_button"
+        android:background="@color/colorPrimary"
+        android:textColor="@color/colorSecond"
+        android:text="Login"/>
 </LinearLayout>
