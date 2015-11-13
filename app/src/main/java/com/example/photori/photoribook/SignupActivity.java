@@ -3,6 +3,7 @@ package com.example.photori.photoribook;
 import android.content.Intent;
 import android.os.Bundle;
 import android.support.v7.app.AppCompatActivity;
+import android.support.v7.widget.Toolbar;
 import android.view.View;
 import android.widget.Button;
 import android.widget.EditText;
@@ -14,6 +15,7 @@ public class SignupActivity extends AppCompatActivity{
     EditText pass_text;
     EditText pass2_text;
     Button login_button;
+    Toolbar toolbar;
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
@@ -24,6 +26,12 @@ public class SignupActivity extends AppCompatActivity{
         pass_text=(EditText)findViewById(R.id.pass_text);
         pass2_text=(EditText)findViewById(R.id.pass2_text);
         login_button=(Button)findViewById(R.id.login_button);
+        toolbar=(Toolbar)findViewById(R.id.toolbar);
+
+
+        setSupportActionBar(toolbar);
+        getSupportActionBar().setTitle("회원가입");
+
         login_button.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View v) {
