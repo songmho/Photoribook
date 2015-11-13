@@ -3,6 +3,7 @@
   <component name="ProjectModuleManager">
     <modules>
       <module fileurl="file://$PROJECT_DIR$/Photoribook.iml" filepath="$PROJECT_DIR$/Photoribook.iml" />
+      <module fileurl="file://$PROJECT_DIR$/Photoribook.iml" filepath="$PROJECT_DIR$/Photoribook.iml" />
       <module fileurl="file://$PROJECT_DIR$/Photoribook2.iml" filepath="$PROJECT_DIR$/Photoribook2.iml" />
       <module fileurl="file://$PROJECT_DIR$/app/app.iml" filepath="$PROJECT_DIR$/app/app.iml" />
     </modules>
