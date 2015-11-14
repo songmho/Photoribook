@@ -14,6 +14,11 @@ import android.view.MenuItem;
 import android.view.View;
 import android.widget.Toast;
 
+import java.text.SimpleDateFormat;
+import java.util.ArrayList;
+import java.util.Date;
+import java.util.logging.SimpleFormatter;
+
 public class MainActivity extends AppCompatActivity {
 
     DrawerLayout drawerlayout;
@@ -66,10 +71,18 @@ public class MainActivity extends AppCompatActivity {
         });
 
 
+        ArrayList<CardItem> items=new ArrayList<>();
+        for(int i=0;i<5;i++){
+            Date d=new Date();
+            SimpleDateFormat f=new SimpleDateFormat("yyyy.MM.dd");
+            CardItem item=new CardItem(0,false,f.format(d).toString(),"test");
+            items.add(item);
+        }
 
         recyclerView.setHasFixedSize(true);                             //리사이클러뷰 화면에 고정
         RecyclerView.LayoutManager layoutManager=new LinearLayoutManager(getApplicationContext());
         recyclerView.setLayoutManager(layoutManager);
+        recyclerView.setAdapter(new CardAdapter(getApplicationContext(),items));
 
         fab.setOnClickListener(new View.OnClickListener() {
             @Override
