@@ -2,10 +2,13 @@ package com.example.photori.photoribook;
 
 import android.content.SharedPreferences;
 import android.os.Bundle;
+import android.support.design.widget.FloatingActionButton;
 import android.support.design.widget.NavigationView;
 import android.support.v4.view.GravityCompat;
 import android.support.v4.widget.DrawerLayout;
 import android.support.v7.app.AppCompatActivity;
+import android.support.v7.widget.LinearLayoutManager;
+import android.support.v7.widget.RecyclerView;
 import android.support.v7.widget.Toolbar;
 import android.view.MenuItem;
 import android.view.View;
@@ -17,6 +20,9 @@ public class MainActivity extends AppCompatActivity {
     NavigationView navigationView;
 
     Toolbar toolbar;
+
+    RecyclerView recyclerView;
+    FloatingActionButton fab;
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
@@ -38,26 +44,40 @@ public class MainActivity extends AppCompatActivity {
 
         drawerlayout=(DrawerLayout)findViewById(R.id.drawerlayout);
         navigationView=(NavigationView)findViewById(R.id.navigationView);
-
+        recyclerView=(RecyclerView)findViewById(R.id.recyclerView);
+        fab=(FloatingActionButton)findViewById(R.id.fab);
         toolbar=(Toolbar)findViewById(R.id.toolbar);
         setSupportActionBar(toolbar);
 
         navigationView.setNavigationItemSelectedListener(new NavigationView.OnNavigationItemSelectedListener() {
             @Override
-            public boolean onNavigationItemSelected(MenuItem menuItem) {
+            public boolean onNavigationItemSelected(MenuItem menuItem) {        //드로어에 있는 리스트 클릭했을 때
                 return clickDrawerMenu(menuItem);
             }
         });
 
-        toolbar.setNavigationIcon(R.drawable.drawericon);
+        toolbar.setNavigationIcon(R.drawable.drawericon);           //액션바에 서랍버튼 넣기
 
         toolbar.setNavigationOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View v) {
-                drawerlayout.openDrawer(GravityCompat.START);
+                drawerlayout.openDrawer(GravityCompat.START);       //액션바에 있는 서랍버튼 눌렀을 때 드로어 열기
             }
         });
-    }
+
+
+
+        recyclerView.setHasFixedSize(true);                             //리사이클러뷰 화면에 고정
+        RecyclerView.LayoutManager layoutManager=new LinearLayoutManager(getApplicationContext());
+        recyclerView.setLayoutManager(layoutManager);
+
+        fab.setOnClickListener(new View.OnClickListener() {
+            @Override
+            public void onClick(View v) {
+                Toast.makeText(MainActivity.this, "스더바보", Toast.LENGTH_SHORT).show();
+            }
+        });
+    }   //onCreate
 
     private boolean clickDrawerMenu(MenuItem menuItem) {
         return false;
