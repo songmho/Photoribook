@@ -4,6 +4,7 @@ import android.content.SharedPreferences;
 import android.os.Bundle;
 import android.support.design.widget.FloatingActionButton;
 import android.support.design.widget.NavigationView;
+import android.support.v4.app.FragmentTransaction;
 import android.support.v4.view.GravityCompat;
 import android.support.v4.widget.DrawerLayout;
 import android.support.v7.app.AppCompatActivity;
@@ -27,6 +28,8 @@ public class MainActivity extends AppCompatActivity {
 
     RecyclerView recyclerView;
     FloatingActionButton fab;
+
+    FragmentTransaction fragmentTransaction;
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
@@ -92,6 +95,38 @@ public class MainActivity extends AppCompatActivity {
     }   //onCreate
 
     private boolean clickDrawerMenu(MenuItem menuItem) {
+        if(menuItem.getGroupId()==R.id.group_main){
+            navigationView.getMenu().setGroupCheckable(R.id.group_main, true, true);
+            navigationView.getMenu().setGroupCheckable(R.id.group_setup, false, true);
+        }
+        else if(menuItem.getGroupId()==R.id.group_setup){
+            navigationView.getMenu().setGroupCheckable(R.id.group_setup, true, true);
+            navigationView.getMenu().setGroupCheckable(R.id.group_main, false, true);
+
+        }
+
+        fragmentTransaction = getSupportFragmentManager().beginTransaction();
+        menuItem.setChecked(true);
+        switch (menuItem.getItemId()){
+            case R.id.item_main:
+                drawerlayout.closeDrawers();
+                Toast.makeText(MainActivity.this, "스더짱짱최개발짱님!!", Toast.LENGTH_SHORT).show();
+                return true;
+            case R.id.item_main2:
+                drawerlayout.closeDrawers();
+                Toast.makeText(MainActivity.this, "스더짱짱최개발짱님!!", Toast.LENGTH_SHORT).show();
+                return true;
+            case R.id.item_main3:
+                drawerlayout.closeDrawers();
+                Toast.makeText(MainActivity.this, "스더짱짱최개발짱님!!", Toast.LENGTH_SHORT).show();
+                return true;
+            case R.id.setup:
+               drawerlayout.closeDrawers();
+                Toast.makeText(MainActivity.this, "스더짱짱최개발짱님!!", Toast.LENGTH_SHORT).show();
+               return true;
+            }
+
+
         return false;
     }
 }

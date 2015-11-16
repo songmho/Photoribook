@@ -1,4 +1,26 @@
 <?xml version="1.0" encoding="utf-8"?>
 <menu xmlns:android="http://schemas.android.com/apk/res/android">
 
+    <group
+        android:id="@+id/group_main">
+    <item
+        android:id="@+id/item_main"
+        android:title="추억남기기"
+        />
+    <item
+        android:id="@+id/item_main2"
+        android:title="추억꺼내기"
+        />
+    <item
+        android:id="@+id/item_main3"
+        android:title="인생샷보기"
+        />
+    </group>
+    <group
+        android:id="@+id/group_setup">
+        <item
+            android:id="@+id/setup"
+            android:title="설정"
+            />
+    </group>
 </menu>
