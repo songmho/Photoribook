@@ -17,7 +17,6 @@ import android.widget.Toast;
 import java.text.SimpleDateFormat;
 import java.util.ArrayList;
 import java.util.Date;
-import java.util.logging.SimpleFormatter;
 
 public class MainActivity extends AppCompatActivity {
 
@@ -87,7 +86,7 @@ public class MainActivity extends AppCompatActivity {
         fab.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View v) {
-                Toast.makeText(MainActivity.this, "스더바보", Toast.LENGTH_SHORT).show();
+                Toast.makeText(MainActivity.this, "명호설사똥바보", Toast.LENGTH_SHORT).show();
             }
         });
     }   //onCreate
