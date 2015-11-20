@@ -18,7 +18,9 @@ public class AddActivity extends AppCompatActivity {
 
         toolbar=(Toolbar)findViewById(R.id.toolbar);
         setSupportActionBar(toolbar);
-        getSupportActionBar().setTitle("Add");
+        getSupportActionBar().setTitle("추억쓰기");
         getSupportActionBar().setDisplayHomeAsUpEnabled(true);
+
+
     }
 }
