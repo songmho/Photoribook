@@ -78,7 +78,7 @@ public class MainActivity extends AppCompatActivity {
         for(int i=0;i<5;i++){
             Date d=new Date();
             SimpleDateFormat f=new SimpleDateFormat("yyyy.MM.dd");
-            CardItem item=new CardItem(0,false,f.format(d).toString(),"test");
+            CardItem item=new CardItem(0,false,f.format(d).toString(),"광화문 가는 길" ,"hello\n\n\nasddf\n\n\n\n\n\n\n\n\n\n\naaaa");
             items.add(item);
         }
 
@@ -130,7 +130,7 @@ public class MainActivity extends AppCompatActivity {
                 return true;
             case R.id.item_mypage:
                 drawerlayout.closeDrawers();
-                Toast.makeText(MainActivity.this, "스더짱짱최개발짱님!!", Toast.LENGTH_SHORT).show();
+                startActivity(new Intent(MainActivity.this,MypageActivity.class));
                 return true;
             case R.id.setup:
                drawerlayout.closeDrawers();

@@ -6,6 +6,8 @@ public class CardItem {
     boolean isSelect;
     String date;
     String text;
+    String detail;
+
 
     public int getImage() {
         return image;
@@ -19,14 +21,19 @@ public class CardItem {
         return text;
     }
 
+    public String getDetail() {
+        return detail;
+    }
+
     public boolean isSelect() {
         return isSelect;
     }
 
-    public CardItem(int image,boolean isSelect,String date, String text){
+    public CardItem(int image,boolean isSelect,String date, String text,String detail){
         this.image=image;
         this.isSelect=isSelect;
         this.date=date;
         this.text=text;
+        this.detail=detail;
     }
 }

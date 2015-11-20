@@ -1,6 +1,8 @@
 package com.example.photori.photoribook;
 
 import android.content.Context;
+import android.content.Intent;
+import android.support.v7.widget.CardView;
 import android.support.v7.widget.RecyclerView;
 import android.view.LayoutInflater;
 import android.view.View;
@@ -21,7 +23,7 @@ public class CardAdapter extends RecyclerView.Adapter {
     final int FOOTER=1;
 
     public CardAdapter(Context applicationContext, ArrayList<CardItem> items) {
-        this.context=context;
+        this.context=applicationContext;
         this.items=items;
     }
 
@@ -48,7 +50,7 @@ public class CardAdapter extends RecyclerView.Adapter {
     }
 
     @Override
-    public void onBindViewHolder(RecyclerView.ViewHolder holder, int position) {
+    public void onBindViewHolder(RecyclerView.ViewHolder holder, final int position) {
         if(position < items.size()) {
             ((Item) holder).image.setBackgroundColor(0xff123456);
             ((Item) holder).select.setOnClickListener(new View.OnClickListener() {
@@ -60,6 +62,18 @@ public class CardAdapter extends RecyclerView.Adapter {
 
             ((Item) holder).date.setText(items.get(position).getDate());
             ((Item) holder).text.setText(items.get(position).getText());
+            ((Item)holder).cardView.setOnClickListener(new View.OnClickListener() {
+                @Override
+                public void onClick(View v) {
+                    Intent intent=new Intent(context,CardDetailActivity.class);
+                    intent.putExtra("image",items.get(position).getImage());
+                    intent.putExtra("title",items.get(position).getText());
+                    intent.putExtra("date",items.get(position).getDate());
+                    intent.putExtra("detail",items.get(position).getDetail());
+                    intent.addFlags(Intent.FLAG_ACTIVITY_NEW_TASK);
+                    context.startActivity(intent);
+                }
+            });
         }
         else if(position==items.size()){
 
@@ -78,6 +92,7 @@ class Item extends RecyclerView.ViewHolder{
     Button select;
     TextView date;
     TextView text;
+    CardView cardView;
 
     public Item(View itemView) {
         super(itemView);
@@ -85,6 +100,7 @@ class Item extends RecyclerView.ViewHolder{
         select=(Button)itemView.findViewById(R.id.selct_button);
         date=(TextView)itemView.findViewById(R.id.text_time);
         text=(TextView)itemView.findViewById(R.id.text_text);
+        cardView=(CardView)itemView.findViewById(R.id.cardView);
 
     }
 }
