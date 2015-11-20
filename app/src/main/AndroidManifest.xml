@@ -30,6 +30,13 @@
         <activity android:name=".SignupActivity"
             android:screenOrientation="portrait">
         </activity>
+
+        <activity android:name=".AddActivity"
+            android:screenOrientation="portrait">
+            <meta-data
+                android:name="android.support.PARENT_ACTIVITY"
+                android:value=".MainActivity"/>
+        </activity>
     </application>
 
 </manifest>
