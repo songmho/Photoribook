@@ -23,7 +23,7 @@
             android:id="@+id/selct_button"
             android:layout_width="30dp"
             android:layout_height="30dp"
-            android:background="@mipmap/ic_launcher"/>
+            android:background="@mipmap/logo"/>
         <TextView
             android:id="@+id/text_text"
             android:text="광화문가는 날"

@@ -25,7 +25,6 @@ public class LoginActivity extends AppCompatActivity {
         pass_text=(EditText)findViewById(R.id.pass_text);
         login_button=(Button)findViewById(R.id.login_button);
         signup_button=(Button)findViewById(R.id.signup_button);
-
         login_button.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View v) {       //login버튼 클릭 시
