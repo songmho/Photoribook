@@ -16,7 +16,7 @@
     <item
         android:id="@+id/item_main3"
         android:title="인생샷 보기"
-        android:icon="@drawable/main_3"
+        android:icon="@drawable/favorite_on"
         />
     </group>
     <group
