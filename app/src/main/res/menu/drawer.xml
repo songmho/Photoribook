@@ -22,6 +22,7 @@
     <group
         android:id="@+id/group_mypage">
         <item
+
             android:id="@+id/item_mypage"
             android:title="마이페이지"
             android:icon="@drawable/mypage"
