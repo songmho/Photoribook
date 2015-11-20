@@ -5,15 +5,18 @@
         android:id="@+id/group_main">
     <item
         android:id="@+id/item_main"
-        android:title="추억 남기기"
+        android:title="오늘의 추억"
+        android:icon="@drawable/main_1"
         />
     <item
         android:id="@+id/item_main2"
         android:title="추억 꺼내기"
+        android:icon="@drawable/main_2"
         />
     <item
         android:id="@+id/item_main3"
         android:title="인생샷 보기"
+        android:icon="@drawable/main_3"
         />
     </group>
     <group
@@ -21,6 +24,7 @@
         <item
             android:id="@+id/item_mypage"
             android:title="마이페이지"
+            android:icon="@drawable/mypage"
             />
     </group>
     <group
@@ -28,6 +32,7 @@
         <item
             android:id="@+id/setup"
             android:title="설정"
+            android:icon="@drawable/settings"
             />
     </group>
 </menu>
