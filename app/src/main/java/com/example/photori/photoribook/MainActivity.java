@@ -99,12 +99,18 @@ public class MainActivity extends AppCompatActivity {
     private boolean clickDrawerMenu(MenuItem menuItem) {
         if(menuItem.getGroupId()==R.id.group_main){
             navigationView.getMenu().setGroupCheckable(R.id.group_main, true, true);
+            navigationView.getMenu().setGroupCheckable(R.id.group_mypage, false, true);
             navigationView.getMenu().setGroupCheckable(R.id.group_setup, false, true);
+        }
+        else if(menuItem.getGroupId()==R.id.group_mypage){
+            navigationView.getMenu().setGroupCheckable(R.id.group_setup, false, true);
+            navigationView.getMenu().setGroupCheckable(R.id.group_mypage, true, true);
+            navigationView.getMenu().setGroupCheckable(R.id.group_main, false, true);
         }
         else if(menuItem.getGroupId()==R.id.group_setup){
             navigationView.getMenu().setGroupCheckable(R.id.group_setup, true, true);
+            navigationView.getMenu().setGroupCheckable(R.id.group_mypage, false, true);
             navigationView.getMenu().setGroupCheckable(R.id.group_main, false, true);
-
         }
 
         fragmentTransaction = getSupportFragmentManager().beginTransaction();
@@ -119,6 +125,10 @@ public class MainActivity extends AppCompatActivity {
                 Toast.makeText(MainActivity.this, "스더짱짱최개발짱님!!", Toast.LENGTH_SHORT).show();
                 return true;
             case R.id.item_main3:
+                drawerlayout.closeDrawers();
+                Toast.makeText(MainActivity.this, "스더짱짱최개발짱님!!", Toast.LENGTH_SHORT).show();
+                return true;
+            case R.id.item_mypage:
                 drawerlayout.closeDrawers();
                 Toast.makeText(MainActivity.this, "스더짱짱최개발짱님!!", Toast.LENGTH_SHORT).show();
                 return true;

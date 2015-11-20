@@ -3,5 +3,5 @@
     <item
         android:id="@+id/add"
         android:showAsAction="always"
-        android:title="추억올리기"/>
+        android:title="완료"/>
 </menu>

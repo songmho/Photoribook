@@ -5,16 +5,23 @@
         android:id="@+id/group_main">
     <item
         android:id="@+id/item_main"
-        android:title="추억남기기"
+        android:title="추억 남기기"
         />
     <item
         android:id="@+id/item_main2"
-        android:title="추억꺼내기"
+        android:title="추억 꺼내기"
         />
     <item
         android:id="@+id/item_main3"
-        android:title="인생샷보기"
+        android:title="인생샷 보기"
         />
+    </group>
+    <group
+        android:id="@+id/group_mypage">
+        <item
+            android:id="@+id/item_mypage"
+            android:title="마이페이지"
+            />
     </group>
     <group
         android:id="@+id/group_setup">
