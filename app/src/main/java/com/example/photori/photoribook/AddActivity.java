@@ -11,10 +11,41 @@ import android.widget.ImageView;
 import android.widget.Toast;
 
 public class AddActivity extends AppCompatActivity {
+
     Toolbar toolbar;
     ImageView image;
     EditText title_edit;
     EditText detail_edit;
+
+    @Override
+    protected void onCreate(Bundle savedInstanceState) {
+        super.onCreate(savedInstanceState);
+        setContentView(R.layout.activity_add);
+
+        toolbar=(Toolbar)findViewById(R.id.toolbar);
+        image=(ImageView)findViewById(R.id.image);
+        title_edit=(EditText)findViewById(R.id.title_edit);
+        detail_edit=(EditText)findViewById(R.id.detail_edit);
+        setSupportActionBar(toolbar);
+        getSupportActionBar().setTitle("추억 쓰기");
+        getSupportActionBar().setDisplayHomeAsUpEnabled(true); //화살표가 생기는것
+
+
+        if(getIntent().getAction()=="android.intent.action.edit"){
+            title_edit.setText(getIntent().getStringExtra("title"));
+            detail_edit.setText(getIntent().getStringExtra("detail"));
+
+        }
+
+        image.setOnClickListener(new View.OnClickListener() {
+            @Override
+            public void onClick(View v) {
+                Toast.makeText(AddActivity.this, "토스트는 우유랑 먹는건데", Toast.LENGTH_SHORT).show();
+            }
+        });
+
+    }
+
 
     @Override
     public boolean onCreateOptionsMenu(Menu menu) {
@@ -34,28 +65,4 @@ public class AddActivity extends AppCompatActivity {
         return super.onOptionsItemSelected(item);
     }
 
-    @Override
-    protected void onCreate(Bundle savedInstanceState) {
-        super.onCreate(savedInstanceState);
-        setContentView(R.layout.activity_add);
-
-        toolbar=(Toolbar)findViewById(R.id.toolbar);
-        image=(ImageView)findViewById(R.id.image);
-        title_edit=(EditText)findViewById(R.id.title_edit);
-        detail_edit=(EditText)findViewById(R.id.detail_edit);
-        setSupportActionBar(toolbar);
-        getSupportActionBar().setTitle("추억 쓰기");
-        getSupportActionBar().setDisplayHomeAsUpEnabled(true); //화살표가 생기는것
-        image.setOnClickListener(new View.OnClickListener() {
-            @Override
-            public void onClick(View v) {
-                Toast.makeText(AddActivity.this, "토스트는 우유랑 먹는건데", Toast.LENGTH_SHORT).show();
-            }
-        });
-
-
-
-
-
-    }
 }

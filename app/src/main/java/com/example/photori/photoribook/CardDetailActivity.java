@@ -4,6 +4,7 @@ import android.content.Intent;
 import android.os.Bundle;
 import android.support.v7.app.AppCompatActivity;
 import android.support.v7.widget.Toolbar;
+import android.util.Log;
 import android.view.Menu;
 import android.view.MenuItem;
 import android.widget.ImageView;
@@ -19,21 +20,6 @@ public class CardDetailActivity extends AppCompatActivity {
     TextView detail;
     TextView date;
     Toolbar toolbar;
-
-    @Override
-    public boolean onCreateOptionsMenu(Menu menu) {
-        getMenuInflater().inflate(R.menu.menu_edit,menu);
-        MenuItem editItem = menu.findItem(R.id.edit);
-        return super.onCreateOptionsMenu(menu);
-    }
-
-    @Override
-    public boolean onOptionsItemSelected(MenuItem item) {
-        Intent intent=new Intent(CardDetailActivity.this,AddActivity.class);
-        startActivity(intent);
-
-        return super.onOptionsItemSelected(item);
-    }
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
@@ -53,5 +39,25 @@ public class CardDetailActivity extends AppCompatActivity {
         detail.setText(intent.getStringExtra("detail"));
         date.setText(intent.getStringExtra("date"));
 
+    }
+
+
+    @Override
+    public boolean onCreateOptionsMenu(Menu menu) {
+        getMenuInflater().inflate(R.menu.menu_edit,menu);
+        MenuItem editItem = menu.findItem(R.id.edit);
+        return super.onCreateOptionsMenu(menu);
+    }
+
+    @Override
+    public boolean onOptionsItemSelected(MenuItem item) {
+        Intent intent=new Intent(CardDetailActivity.this,AddActivity.class);
+        intent.putExtra("title",getIntent().getStringExtra("title"));
+        intent.putExtra("detail",getIntent().getStringExtra("detail"));
+        intent.putExtra("date",getIntent().getStringExtra("date"));
+        intent.setAction("android.intent.action.edit");
+        startActivity(intent);
+
+        return super.onOptionsItemSelected(item);
     }
 }

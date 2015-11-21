@@ -8,6 +8,10 @@ import android.widget.Button;
 import android.widget.EditText;
 import android.widget.Toast;
 
+import com.parse.LogInCallback;
+import com.parse.ParseException;
+import com.parse.ParseUser;
+
 public class LoginActivity extends AppCompatActivity {
 
 
@@ -28,6 +32,22 @@ public class LoginActivity extends AppCompatActivity {
         login_button.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View v) {       //login버튼 클릭 시
+
+                new ParseUser().logInInBackground(id_text.getText().toString(), pass_text.getText().toString(), new LogInCallback() {
+                    @Override
+                    public void done(ParseUser parseUser, ParseException e) {
+                        if (parseUser!=null) {
+                            Toast.makeText(LoginActivity.this, "로그인 되었습니다.", Toast.LENGTH_SHORT).show();
+                            startActivity(new Intent(LoginActivity.this, MainActivity.class));
+                            finish();
+                        }
+                        else{
+                            Toast.makeText(LoginActivity.this, "아이디와 비밀번호를 다시 확인 하십시오.", Toast.LENGTH_SHORT).show();
+                            startActivity(new Intent(LoginActivity.this,MainActivity.class));
+                            finish();
+                        }
+                    }
+                });
                 id_text.getText().toString();
                 pass_text.getText().toString();
                 Toast.makeText(LoginActivity.this, "로그인 성공~", Toast.LENGTH_SHORT).show();
@@ -39,7 +59,6 @@ public class LoginActivity extends AppCompatActivity {
         signup_button.setOnClickListener(new View.OnClickListener() {       //signup버튼 클릭 시
             @Override
             public void onClick(View v) {
-
                 startActivity(new Intent(LoginActivity.this, SignupActivity.class));
                 finish();
             }
