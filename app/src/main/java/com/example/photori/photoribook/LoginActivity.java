@@ -36,23 +36,17 @@ public class LoginActivity extends AppCompatActivity {
                 new ParseUser().logInInBackground(id_text.getText().toString(), pass_text.getText().toString(), new LogInCallback() {
                     @Override
                     public void done(ParseUser parseUser, ParseException e) {
-                        if (parseUser!=null) {
-                            Toast.makeText(LoginActivity.this, "로그인 되었습니다.", Toast.LENGTH_SHORT).show();
+                        if (parseUser != null) {
+                            Toast.makeText(LoginActivity.this, "로그인 성공~", Toast.LENGTH_SHORT).show();
                             startActivity(new Intent(LoginActivity.this, MainActivity.class));
                             finish();
-                        }
-                        else{
+                        } else {
                             Toast.makeText(LoginActivity.this, "아이디와 비밀번호를 다시 확인 하십시오.", Toast.LENGTH_SHORT).show();
-                            startActivity(new Intent(LoginActivity.this,MainActivity.class));
+                            //   startActivity(new Intent(LoginActivity.this,MainActivity.class));
                             finish();
                         }
                     }
                 });
-                id_text.getText().toString();
-                pass_text.getText().toString();
-                Toast.makeText(LoginActivity.this, "로그인 성공~", Toast.LENGTH_SHORT).show();
-                startActivity(new Intent(LoginActivity.this, MainActivity.class));
-                finish();
             }
         });
 

@@ -2,6 +2,8 @@ package com.example.photori.photoribook;
 
 import android.content.Intent;
 import android.content.SharedPreferences;
+import android.graphics.Bitmap;
+import android.graphics.BitmapFactory;
 import android.os.Bundle;
 import android.support.design.widget.FloatingActionButton;
 import android.support.design.widget.NavigationView;
@@ -12,13 +14,26 @@ import android.support.v7.app.AppCompatActivity;
 import android.support.v7.widget.LinearLayoutManager;
 import android.support.v7.widget.RecyclerView;
 import android.support.v7.widget.Toolbar;
+import android.util.Log;
 import android.view.MenuItem;
 import android.view.View;
+import android.widget.ImageView;
+import android.widget.TextView;
 import android.widget.Toast;
+
+import com.bumptech.glide.Glide;
+import com.parse.GetCallback;
+import com.parse.ParseException;
+import com.parse.ParseFile;
+import com.parse.ParseQuery;
+import com.parse.ParseUser;
 
 import java.text.SimpleDateFormat;
 import java.util.ArrayList;
 import java.util.Date;
+
+import de.hdodenhof.circleimageview.CircleImageView;
+import jp.wasabeef.glide.transformations.CropCircleTransformation;
 
 public class MainActivity extends AppCompatActivity {
 
@@ -32,14 +47,16 @@ public class MainActivity extends AppCompatActivity {
 
     FragmentTransaction fragmentTransaction;
 
+
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
         SharedPreferences shpref=getSharedPreferences("myPref",0);
-        //앱 종류 여부에 상관하지 않고 값을 저장하고 싶을때
-       /* int count=shpref.getInt("Count",-100);
-        if(count==-100){
+        //앱 종료 여부에 상관하지 않고 값을 저장하고 싶을때
+        int count=shpref.getInt("Count",-100);
+        if(count==-100 || ParseUser.getCurrentUser()==null){
             startActivity(new Intent(MainActivity.this, SplashActivity.class));
+            finish();
             count=1;
         }
         else {
@@ -47,7 +64,7 @@ public class MainActivity extends AppCompatActivity {
         }SharedPreferences.Editor editor=shpref.edit();
         editor.putInt("Count",count);
         editor.commit();
-*/
+
         setContentView(R.layout.activity_main);
 
         drawerlayout=(DrawerLayout)findViewById(R.id.drawerlayout);
@@ -72,6 +89,17 @@ public class MainActivity extends AppCompatActivity {
                 drawerlayout.openDrawer(GravityCompat.START);       //액션바에 있는 서랍버튼 눌렀을 때 드로어 열기
             }
         });
+
+        if (ParseUser.getCurrentUser()!=null) {
+            TextView name = (TextView) navigationView.findViewById(R.id.name);
+            ImageView profile=(ImageView)navigationView.findViewById(R.id.profile);
+            byte[] bytes=new byte[10];
+            Glide.with(getApplicationContext()).load(R.drawable.ss).
+                    bitmapTransform(new CropCircleTransformation(navigationView.getContext())).into(profile);
+
+            name.setText(ParseUser.getCurrentUser().getString("name"));
+
+        }
 
 
         ArrayList<CardItem> items=new ArrayList<>();
@@ -118,7 +146,6 @@ public class MainActivity extends AppCompatActivity {
         switch (menuItem.getItemId()){
             case R.id.item_main:
                 drawerlayout.closeDrawers();
-                Toast.makeText(MainActivity.this, "스더짱짱최개발짱님!!", Toast.LENGTH_SHORT).show();
                 return true;
             case R.id.item_main2:
                 drawerlayout.closeDrawers();

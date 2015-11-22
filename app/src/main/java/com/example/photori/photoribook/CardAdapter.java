@@ -11,6 +11,8 @@ import android.widget.Button;
 import android.widget.ImageView;
 import android.widget.TextView;
 
+import com.bumptech.glide.Glide;
+
 import java.util.ArrayList;
 
 
@@ -52,7 +54,9 @@ public class CardAdapter extends RecyclerView.Adapter {
     @Override
     public void onBindViewHolder(RecyclerView.ViewHolder holder, final int position) {
         if(position < items.size()) {
-            ((Item) holder).image.setBackgroundColor(0xff123456);
+            Glide.with(context).load(items.get(position).getImage())
+                    .placeholder(R.drawable.photoribook_logomain).into(((Item)holder).image);
+
             ((Item) holder).select.setOnClickListener(new View.OnClickListener() {
                 @Override
                 public void onClick(View v) {
@@ -84,30 +88,29 @@ public class CardAdapter extends RecyclerView.Adapter {
     public int getItemCount() {
         return items.size()+1;
     }
-}
+    class Item extends RecyclerView.ViewHolder{
 
-class Item extends RecyclerView.ViewHolder{
+        ImageView image;
+        Button select;
+        TextView date;
+        TextView text;
+        CardView cardView;
 
-    ImageView image;
-    Button select;
-    TextView date;
-    TextView text;
-    CardView cardView;
+        public Item(View itemView) {
+            super(itemView);
+            image=(ImageView)itemView.findViewById(R.id.image);
+            select=(Button)itemView.findViewById(R.id.selct_button);
+            date=(TextView)itemView.findViewById(R.id.text_time);
+            text=(TextView)itemView.findViewById(R.id.text_text);
+            cardView=(CardView)itemView.findViewById(R.id.cardView);
+        }
+    }
 
-    public Item(View itemView) {
-        super(itemView);
-        image=(ImageView)itemView.findViewById(R.id.image);
-        select=(Button)itemView.findViewById(R.id.selct_button);
-        date=(TextView)itemView.findViewById(R.id.text_time);
-        text=(TextView)itemView.findViewById(R.id.text_text);
-        cardView=(CardView)itemView.findViewById(R.id.cardView);
+    class Footer extends RecyclerView.ViewHolder{
 
+        public Footer(View itemView) {
+            super(itemView);
+        }
     }
 }
 
-class Footer extends RecyclerView.ViewHolder{
-
-    public Footer(View itemView) {
-        super(itemView);
-    }
-}
