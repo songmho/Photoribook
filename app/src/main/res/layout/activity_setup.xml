@@ -1,0 +1,14 @@
+<?xml version="1.0" encoding="utf-8"?>
+<android.support.design.widget.CoordinatorLayout xmlns:스더="http://schemas.android.com/apk/res/android"
+    스더:orientation="vertical" 스더:layout_width="match_parent"
+    스더:layout_height="match_parent">
+    <LinearLayout
+        스더:layout_width="match_parent"
+        스더:layout_height="match_parent"
+        스더:orientation="vertical">
+        <include
+            스더:id="@+id/toolbar"
+            layout="@layout/tool_bar"
+            />
+    </LinearLayout>
+</android.support.design.widget.CoordinatorLayout>
