@@ -24,9 +24,12 @@ public class CardAdapter extends RecyclerView.Adapter {
     final int HOLDER=0;
     final int FOOTER=1;
 
-    public CardAdapter(Context applicationContext, ArrayList<CardItem> items) {
+    int cur_layout;
+
+    public CardAdapter(Context applicationContext, ArrayList<CardItem> items, int layout) {
         this.context=applicationContext;
         this.items=items;
+        this.cur_layout=layout;
     }
 
     @Override
@@ -45,10 +48,11 @@ public class CardAdapter extends RecyclerView.Adapter {
             View v = LayoutInflater.from(parent.getContext()).inflate(R.layout.item_card, parent, false);
             return new Item(v);
         }
-        else{
+        else if(viewType==FOOTER){
             View v = LayoutInflater.from(parent.getContext()).inflate(R.layout.fab_footer, parent, false);
             return new Item(v);
         }
+        return null;
     }
 
     @Override
@@ -79,14 +83,17 @@ public class CardAdapter extends RecyclerView.Adapter {
                 }
             });
         }
-        else if(position==items.size()){
+        else if(position==items.size() && cur_layout==R.layout.activity_main){
 
         }
     }
 
     @Override
     public int getItemCount() {
+        if(cur_layout==R.layout.activity_main)
         return items.size()+1;
+        else
+            return items.size();
     }
     class Item extends RecyclerView.ViewHolder{
 

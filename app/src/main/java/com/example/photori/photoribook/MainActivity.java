@@ -2,8 +2,6 @@ package com.example.photori.photoribook;
 
 import android.content.Intent;
 import android.content.SharedPreferences;
-import android.graphics.Bitmap;
-import android.graphics.BitmapFactory;
 import android.os.Bundle;
 import android.support.design.widget.FloatingActionButton;
 import android.support.design.widget.NavigationView;
@@ -14,7 +12,6 @@ import android.support.v7.app.AppCompatActivity;
 import android.support.v7.widget.LinearLayoutManager;
 import android.support.v7.widget.RecyclerView;
 import android.support.v7.widget.Toolbar;
-import android.util.Log;
 import android.view.MenuItem;
 import android.view.View;
 import android.widget.ImageView;
@@ -22,17 +19,12 @@ import android.widget.TextView;
 import android.widget.Toast;
 
 import com.bumptech.glide.Glide;
-import com.parse.GetCallback;
-import com.parse.ParseException;
-import com.parse.ParseFile;
-import com.parse.ParseQuery;
 import com.parse.ParseUser;
 
 import java.text.SimpleDateFormat;
 import java.util.ArrayList;
 import java.util.Date;
 
-import de.hdodenhof.circleimageview.CircleImageView;
 import jp.wasabeef.glide.transformations.CropCircleTransformation;
 
 public class MainActivity extends AppCompatActivity {
@@ -113,7 +105,7 @@ public class MainActivity extends AppCompatActivity {
         recyclerView.setHasFixedSize(true);                             //리사이클러뷰 화면에 고정
         RecyclerView.LayoutManager layoutManager=new LinearLayoutManager(getApplicationContext());
         recyclerView.setLayoutManager(layoutManager);
-        recyclerView.setAdapter(new CardAdapter(getApplicationContext(),items));
+        recyclerView.setAdapter(new CardAdapter(getApplicationContext(),items, R.layout.activity_main));
 
         fab.setOnClickListener(new View.OnClickListener() {
             @Override
@@ -148,21 +140,21 @@ public class MainActivity extends AppCompatActivity {
                 drawerlayout.closeDrawers();
                 return true;
             case R.id.item_main2:
+                startActivity(new Intent(MainActivity.this,MemoryActivity.class));
                 drawerlayout.closeDrawers();
-                Toast.makeText(MainActivity.this, "스더짱짱최개발짱님!!", Toast.LENGTH_SHORT).show();
                 return true;
             case R.id.item_main3:
+                startActivity(new Intent(MainActivity.this,ShotActivity.class));
                 drawerlayout.closeDrawers();
-                Toast.makeText(MainActivity.this, "스더짱짱최개발짱님!!", Toast.LENGTH_SHORT).show();
                 return true;
             case R.id.item_mypage:
-                drawerlayout.closeDrawers();
                 startActivity(new Intent(MainActivity.this,MypageActivity.class));
+                drawerlayout.closeDrawers();
                 return true;
             case R.id.setup:
-               drawerlayout.closeDrawers();
-                Toast.makeText(MainActivity.this, "스더짱짱최개발짱님!!", Toast.LENGTH_SHORT).show();
-               return true;
+                startActivity(new Intent(MainActivity.this,SettingActivity.class));
+                drawerlayout.closeDrawers();
+                return true;
             }
 
 
