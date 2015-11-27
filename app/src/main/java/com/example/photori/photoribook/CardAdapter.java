@@ -56,7 +56,7 @@ public class CardAdapter extends RecyclerView.Adapter {
     }
 
     @Override
-    public void onBindViewHolder(RecyclerView.ViewHolder holder, final int position) {
+    public void onBindViewHolder(final RecyclerView.ViewHolder holder, final int position) {
         if(position < items.size()) {
             Glide.with(context).load(items.get(position).getImage())
                     .placeholder(R.drawable.photoribook_logomain).into(((Item)holder).image);
@@ -64,6 +64,14 @@ public class CardAdapter extends RecyclerView.Adapter {
             ((Item) holder).select.setOnClickListener(new View.OnClickListener() {
                 @Override
                 public void onClick(View v) {
+                    if(items.get(position).isSelect()){
+                        ((Item)holder).select.setSelected(false);
+                        items.get(position).setSelect(false);
+                    }
+                    else{
+                        ((Item)holder).select.setSelected(true);
+                        items.get(position).setSelect(true);
+                    }
 
                 }
             });
@@ -106,7 +114,7 @@ public class CardAdapter extends RecyclerView.Adapter {
         public Item(View itemView) {
             super(itemView);
             image=(ImageView)itemView.findViewById(R.id.image);
-            select=(Button)itemView.findViewById(R.id.selct_button);
+            select=(Button)itemView.findViewById(R.id.select_button);
             date=(TextView)itemView.findViewById(R.id.text_time);
             text=(TextView)itemView.findViewById(R.id.text_text);
             cardView=(CardView)itemView.findViewById(R.id.cardView);

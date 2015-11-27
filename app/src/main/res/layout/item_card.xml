@@ -30,10 +30,10 @@
                 android:orientation="horizontal">
         <Button
             android:layout_marginTop="5dp"
-            android:id="@+id/selct_button"
+            android:id="@+id/select_button"
             android:layout_width="30dp"
             android:layout_height="30dp"
-            android:background="@drawable/favorite_off"/>
+            android:background="@drawable/btn_style"/>
 
 
             <TextView

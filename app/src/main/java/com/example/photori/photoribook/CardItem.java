@@ -8,7 +8,6 @@ public class CardItem {
     String text;
     String detail;
 
-
     public int getImage() {
         return image;
     }
@@ -28,6 +27,8 @@ public class CardItem {
     public boolean isSelect() {
         return isSelect;
     }
+
+    public void setSelect(boolean isSelect) { this.isSelect=isSelect;}
 
     public CardItem(int image,boolean isSelect,String date, String text,String detail){
         this.image=image;
