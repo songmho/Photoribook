@@ -53,10 +53,11 @@ public class MainActivity extends AppCompatActivity {
         SharedPreferences shpref=getSharedPreferences("myPref",0);
         //앱 종료 여부에 상관하지 않고 값을 저장하고 싶을때
         int count=shpref.getInt("Count",-100);
-        if(ParseUser.getCurrentUser()==null){
+        if(count==-100 || ParseUser.getCurrentUser()==null){
             startActivity(new Intent(MainActivity.this, SplashActivity.class));
             finish();
             count=1;
+            return;
         }
         else {
             count++;
@@ -81,6 +82,7 @@ public class MainActivity extends AppCompatActivity {
         });
 
         toolbar.setNavigationIcon(R.drawable.drawericon);           //액션바에 서랍버튼 넣기
+        //toolbar.setLogo(R.drawable.photoribook_logomain);
 
         toolbar.setNavigationOnClickListener(new View.OnClickListener() {
             @Override

@@ -19,9 +19,7 @@ import java.util.ArrayList;
 import java.util.Date;
 import java.util.List;
 
-/**
- * Created by songmho on 15. 11. 26..
- */
+
 public class ShotActivity extends AppCompatActivity {
 
     RecyclerView recyclerView;

@@ -11,9 +11,6 @@ import com.prolificinteractive.materialcalendarview.MaterialCalendarView;
 
 import java.util.ArrayList;
 
-/**
- * Created by songmho on 15. 11. 26..
- */
 public class MemoryActivity extends AppCompatActivity {
     Toolbar toolbar;
     MaterialCalendarView calendar;
