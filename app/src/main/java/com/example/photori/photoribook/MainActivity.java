@@ -12,6 +12,7 @@ import android.support.v7.app.AppCompatActivity;
 import android.support.v7.widget.LinearLayoutManager;
 import android.support.v7.widget.RecyclerView;
 import android.support.v7.widget.Toolbar;
+import android.view.KeyEvent;
 import android.view.MenuItem;
 import android.view.View;
 import android.widget.ImageView;
@@ -186,4 +187,23 @@ public class MainActivity extends AppCompatActivity {
 
         return false;
     }
+
+
+    @Override
+    public boolean onKeyDown(int keyCode, KeyEvent event) {
+
+        switch (keyCode) {
+            case KeyEvent.KEYCODE_BACK:
+                if (drawerlayout.isDrawerOpen(navigationView))
+                    drawerlayout.closeDrawers();
+                else {
+                    moveTaskToBack(true);
+                    finish();
+                }
+                break;
+        }
+
+        return true;
+    }
+
 }
