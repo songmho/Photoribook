@@ -136,10 +136,14 @@ public class MainActivity extends AppCompatActivity {
                     }
                     recyclerView.setAdapter(new CardAdapter(getApplicationContext(), items, R.layout.activity_main));
                 }
-                else{
+                else{  CardItem item = new CardItem(R.drawable.edit_default,false,"2015.11.27",
+                        "추억을 남겨보세요", "오늘의 추억에 대해서 말해주세요");
+                    items.add(item);
+                recyclerView.setAdapter(new CardAdapter(getApplicationContext(), items, R.layout.activity_main));
+            }
                     Toast.makeText(MainActivity.this, "리스트가 없습니다", Toast.LENGTH_SHORT).show();
                 }
-            }
+
         });
     }
 

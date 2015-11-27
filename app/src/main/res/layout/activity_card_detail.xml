@@ -26,7 +26,8 @@
                 android:layout_width="350dp"
                 android:layout_height="350dp"
                 android:layout_gravity="center"
-                android:src="#CCCCCC"/>
+                android:scaleType="fitXY"
+                android:src="@drawable/edit_default"/>
             <TextView
                 android:id="@+id/text_date"
                 android:gravity="right"

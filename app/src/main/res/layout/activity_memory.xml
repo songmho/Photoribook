@@ -14,9 +14,13 @@
             />
 
         <com.prolificinteractive.materialcalendarview.MaterialCalendarView
+            android:id="@+id/calendar"
             android:layout_width="match_parent"
-            android:layout_height="wrap_content"></com.prolificinteractive.materialcalendarview.MaterialCalendarView>
+            android:layout_height="wrap_content">
+
+        </com.prolificinteractive.materialcalendarview.MaterialCalendarView>
     <android.support.v7.widget.RecyclerView
+        android:id="@+id/calendar_photo"
         android:layout_width="match_parent"
         android:layout_height="match_parent"/>
     </LinearLayout>

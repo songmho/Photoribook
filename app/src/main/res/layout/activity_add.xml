@@ -24,7 +24,7 @@
             android:layout_width="270dp"
             android:layout_height="270dp"
             android:layout_gravity="center"
-            android:src="#CCCCCC"/>
+            android:src="@drawable/edit_default" />
 
         <TextView
             android:layout_marginTop="15dp"
