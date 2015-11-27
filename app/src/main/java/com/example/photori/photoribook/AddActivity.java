@@ -10,6 +10,13 @@ import android.widget.EditText;
 import android.widget.ImageView;
 import android.widget.Toast;
 
+import com.parse.ParseObject;
+import com.parse.ParseRelation;
+import com.parse.ParseUser;
+
+import java.text.SimpleDateFormat;
+import java.util.Date;
+
 public class AddActivity extends AppCompatActivity {
 
     Toolbar toolbar;
@@ -40,6 +47,18 @@ public class AddActivity extends AppCompatActivity {
         image.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View v) {
+                ParseRelation<ParseObject> relation=ParseUser.getCurrentUser().getRelation("My_memory");
+                Date d=new Date();
+                SimpleDateFormat f=new SimpleDateFormat("yyyy.MM.dd");
+
+                ParseObject o=new ParseObject("Memory");
+                o.put("Photo",new Byte[10]);
+                o.put("Title",title_edit.getText().toString());
+                o.put("Time",f.format(d).toString());
+                o.put("Detail",detail_edit.getText().toString());
+                o.put("isFamous",false);
+                ParseUser.getCurrentUser().saveInBackground();
+
                 Toast.makeText(AddActivity.this, "토스트는 우유랑 먹는건데", Toast.LENGTH_SHORT).show();
             }
         });

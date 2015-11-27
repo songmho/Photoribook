@@ -19,11 +19,16 @@ import android.widget.TextView;
 import android.widget.Toast;
 
 import com.bumptech.glide.Glide;
+import com.parse.FindCallback;
+import com.parse.ParseException;
+import com.parse.ParseObject;
+import com.parse.ParseQuery;
 import com.parse.ParseUser;
 
 import java.text.SimpleDateFormat;
 import java.util.ArrayList;
 import java.util.Date;
+import java.util.List;
 
 import jp.wasabeef.glide.transformations.CropCircleTransformation;
 
@@ -38,6 +43,7 @@ public class MainActivity extends AppCompatActivity {
     FloatingActionButton fab;
 
     FragmentTransaction fragmentTransaction;
+    ArrayList<CardItem> items=new ArrayList<>();
 
 
     @Override
@@ -46,7 +52,7 @@ public class MainActivity extends AppCompatActivity {
         SharedPreferences shpref=getSharedPreferences("myPref",0);
         //앱 종료 여부에 상관하지 않고 값을 저장하고 싶을때
         int count=shpref.getInt("Count",-100);
-        if(count==-100 || ParseUser.getCurrentUser()==null){
+        if(ParseUser.getCurrentUser()==null){
             startActivity(new Intent(MainActivity.this, SplashActivity.class));
             finish();
             count=1;
@@ -82,30 +88,18 @@ public class MainActivity extends AppCompatActivity {
             }
         });
 
-        if (ParseUser.getCurrentUser()!=null) {
-            TextView name = (TextView) navigationView.findViewById(R.id.name);
-            ImageView profile=(ImageView)navigationView.findViewById(R.id.profile);
-            byte[] bytes=new byte[10];
-            Glide.with(getApplicationContext()).load(R.drawable.ss).
-                    bitmapTransform(new CropCircleTransformation(navigationView.getContext())).into(profile);
+        TextView name = (TextView) navigationView.findViewById(R.id.name);
+        ImageView profile=(ImageView)navigationView.findViewById(R.id.profile);
+        byte[] bytes=new byte[10];
+        Glide.with(getApplicationContext()).load(R.drawable.ss).
+                bitmapTransform(new CropCircleTransformation(navigationView.getContext())).into(profile);
 
-            name.setText(ParseUser.getCurrentUser().getString("name"));
+        name.setText(ParseUser.getCurrentUser().getString("name"));
 
-        }
-
-
-        ArrayList<CardItem> items=new ArrayList<>();
-        for(int i=0;i<5;i++){
-            Date d=new Date();
-            SimpleDateFormat f=new SimpleDateFormat("yyyy.MM.dd");
-            CardItem item=new CardItem(0,false,f.format(d).toString(),"광화문 가는 길" ,"hello\n\n\nasddf\n\n\n\n\n\n\n\n\n\n\naaaa");
-            items.add(item);
-        }
 
         recyclerView.setHasFixedSize(true);                             //리사이클러뷰 화면에 고정
         RecyclerView.LayoutManager layoutManager=new LinearLayoutManager(getApplicationContext());
         recyclerView.setLayoutManager(layoutManager);
-        recyclerView.setAdapter(new CardAdapter(getApplicationContext(),items, R.layout.activity_main));
 
         fab.setOnClickListener(new View.OnClickListener() {
             @Override
@@ -115,6 +109,38 @@ public class MainActivity extends AppCompatActivity {
             }
         });
     }   //onCreate
+
+
+    @Override
+    protected void onResume() {
+        super.onResume();
+        items.clear();
+
+        Date d=new Date();
+        SimpleDateFormat f=new SimpleDateFormat("yyyy.MM.dd");
+
+
+
+        ParseUser u=ParseUser.getCurrentUser();
+        ParseQuery<ParseObject> query= u.getRelation("My_memory").getQuery();
+        query.whereEqualTo("Time",f.format(d).toString());
+        query.findInBackground(new FindCallback<ParseObject>() {
+            @Override
+            public void done(List<ParseObject> list, ParseException e) {
+                if(list.size()>0 && list!=null) {
+                    for (ParseObject o : list) {
+                        CardItem item = new CardItem(0, o.getBoolean("isFamous"), o.getString("Time"),
+                                o.getString("Title"), o.getString("Detail"));
+                        items.add(item);
+                    }
+                    recyclerView.setAdapter(new CardAdapter(getApplicationContext(), items, R.layout.activity_main));
+                }
+                else{
+                    Toast.makeText(MainActivity.this, "리스트가 없습니다", Toast.LENGTH_SHORT).show();
+                }
+            }
+        });
+    }
 
     private boolean clickDrawerMenu(MenuItem menuItem) {
         if(menuItem.getGroupId()==R.id.group_main){

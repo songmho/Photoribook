@@ -43,7 +43,6 @@ public class LoginActivity extends AppCompatActivity {
                         } else {
                             Toast.makeText(LoginActivity.this, "아이디와 비밀번호를 다시 확인 하십시오.", Toast.LENGTH_SHORT).show();
                             //   startActivity(new Intent(LoginActivity.this,MainActivity.class));
-                            finish();
                         }
                     }
                 });

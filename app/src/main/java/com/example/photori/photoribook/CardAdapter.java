@@ -61,6 +61,8 @@ public class CardAdapter extends RecyclerView.Adapter {
             Glide.with(context).load(items.get(position).getImage())
                     .placeholder(R.drawable.photoribook_logomain).into(((Item)holder).image);
 
+            ((Item) holder).select.setSelected(items.get(position).isSelect());
+
             ((Item) holder).select.setOnClickListener(new View.OnClickListener() {
                 @Override
                 public void onClick(View v) {
@@ -71,6 +73,7 @@ public class CardAdapter extends RecyclerView.Adapter {
                     else{
                         ((Item)holder).select.setSelected(true);
                         items.get(position).setSelect(true);
+
                     }
 
                 }
