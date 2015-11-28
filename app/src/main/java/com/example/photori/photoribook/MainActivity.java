@@ -2,6 +2,8 @@ package com.example.photori.photoribook;
 
 import android.content.Intent;
 import android.content.SharedPreferences;
+import android.graphics.Bitmap;
+import android.graphics.BitmapFactory;
 import android.os.Bundle;
 import android.support.design.widget.FloatingActionButton;
 import android.support.design.widget.NavigationView;
@@ -17,15 +19,16 @@ import android.view.MenuItem;
 import android.view.View;
 import android.widget.ImageView;
 import android.widget.TextView;
-import android.widget.Toast;
 
 import com.bumptech.glide.Glide;
 import com.parse.FindCallback;
 import com.parse.ParseException;
+import com.parse.ParseFile;
 import com.parse.ParseObject;
 import com.parse.ParseQuery;
 import com.parse.ParseUser;
 
+import java.io.ByteArrayOutputStream;
 import java.text.SimpleDateFormat;
 import java.util.ArrayList;
 import java.util.Date;
@@ -93,9 +96,17 @@ public class MainActivity extends AppCompatActivity {
 
         TextView name = (TextView) navigationView.findViewById(R.id.name);
         ImageView profile=(ImageView)navigationView.findViewById(R.id.profile);
-        byte[] bytes=new byte[10];
-        Glide.with(getApplicationContext()).load(R.drawable.ss).
-                bitmapTransform(new CropCircleTransformation(navigationView.getContext())).into(profile);
+
+        String tempPath="data/data/com.example.photori.photoribook/files/profile.jpg";
+        Bitmap bm = BitmapFactory.decodeFile(tempPath);
+        if(bm!=null){
+            Glide.with(getApplicationContext()).load(bitmapTobyte(bm)).
+                    bitmapTransform(new CropCircleTransformation(getApplicationContext())).into(profile);
+        }
+        else{        Glide.with(getApplicationContext()).load(R.drawable.ss).
+                bitmapTransform(new CropCircleTransformation(getApplicationContext())).into(profile);
+
+        }
 
         name.setText(ParseUser.getCurrentUser().getString("name"));
 
@@ -107,7 +118,6 @@ public class MainActivity extends AppCompatActivity {
         fab.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View v) {
-                Toast.makeText(MainActivity.this, "명호설사똥바보", Toast.LENGTH_SHORT).show();
                 startActivity(new Intent(MainActivity.this, AddActivity.class));
             }
         });
@@ -121,7 +131,7 @@ public class MainActivity extends AppCompatActivity {
 
         Date d=new Date();
         SimpleDateFormat f=new SimpleDateFormat("yyyy.MM.dd");
-
+        final byte[][] bytes = {new byte[10]};
 
 
         ParseUser u=ParseUser.getCurrentUser();
@@ -130,21 +140,29 @@ public class MainActivity extends AppCompatActivity {
         query.findInBackground(new FindCallback<ParseObject>() {
             @Override
             public void done(List<ParseObject> list, ParseException e) {
-                if(list.size()>0 && list!=null) {
+                if(list!=null && list.size()>0) {
                     for (ParseObject o : list) {
-                        CardItem item = new CardItem(0, o.getBoolean("isFamous"), o.getString("Time"),
-                                o.getString("Title"), o.getString("Detail"));
+                        ParseFile file=(ParseFile)o.get("Photo");
+                        try {
+                            bytes[0] =file.getData();
+                        } catch (ParseException e1) {
+                            e1.printStackTrace();
+                        }
+
+                        CardItem item = new CardItem(o.getObjectId(),bytes[0], o.getBoolean("isFamous"), o.getString("Time"),
+                                    o.getString("Title"), o.getString("Detail"));
+
                         items.add(item);
                     }
                     recyclerView.setAdapter(new CardAdapter(getApplicationContext(), items, R.layout.activity_main));
                 }
-                else{  CardItem item = new CardItem(R.drawable.edit_default,false,"2015.11.27",
+                else{  CardItem item = new CardItem("", bytes[0],false,"2015.11.27",
                         "추억을 남겨보세요", "오늘의 추억에 대해서 말해주세요");
                     items.add(item);
                 recyclerView.setAdapter(new CardAdapter(getApplicationContext(), items, R.layout.activity_main));
-            }
-                    Toast.makeText(MainActivity.this, "리스트가 없습니다", Toast.LENGTH_SHORT).show();
                 }
+
+            }
 
         });
     }
@@ -212,4 +230,11 @@ public class MainActivity extends AppCompatActivity {
         return true;
     }
 
+
+    private byte[] bitmapTobyte(Bitmap bm) {
+        ByteArrayOutputStream stream=new ByteArrayOutputStream();
+        bm.compress(Bitmap.CompressFormat.JPEG, 50, stream);
+        byte[] bytes=stream.toByteArray();
+        return bytes;
+    }
 }

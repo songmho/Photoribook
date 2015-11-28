@@ -4,6 +4,7 @@ import android.content.Context;
 import android.content.Intent;
 import android.support.v7.widget.CardView;
 import android.support.v7.widget.RecyclerView;
+import android.util.Log;
 import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
@@ -12,6 +13,13 @@ import android.widget.ImageView;
 import android.widget.TextView;
 
 import com.bumptech.glide.Glide;
+import com.parse.GetCallback;
+import com.parse.ParseException;
+import com.parse.ParseFile;
+import com.parse.ParseObject;
+import com.parse.ParseRelation;
+import com.parse.ParseUser;
+import com.parse.SaveCallback;
 
 import java.util.ArrayList;
 
@@ -59,7 +67,7 @@ public class CardAdapter extends RecyclerView.Adapter {
     public void onBindViewHolder(final RecyclerView.ViewHolder holder, final int position) {
         if(position < items.size()) {
             Glide.with(context).load(items.get(position).getImage())
-                    .placeholder(R.drawable.photoribook_logomain).into(((Item)holder).image);
+                    .placeholder(R.drawable.edit_default).into(((Item)holder).image);
 
             ((Item) holder).select.setSelected(items.get(position).isSelect());
 
@@ -69,11 +77,37 @@ public class CardAdapter extends RecyclerView.Adapter {
                     if(items.get(position).isSelect()){
                         ((Item)holder).select.setSelected(false);
                         items.get(position).setSelect(false);
+
+                        final ParseUser p=ParseUser.getCurrentUser();
+                        final ParseRelation<ParseObject> relation=p.getRelation("My_memory");
+                        relation.getQuery().getInBackground(items.get(position).getObjectId(), new GetCallback<ParseObject>() {
+                            @Override
+                            public void done(ParseObject o, ParseException e) {
+                                o.put("isFamous",false);
+                                o.saveInBackground(new SaveCallback() {
+                                    @Override
+                                    public void done(ParseException e) {
+                                    }
+                                });
+                            }
+                        });
                     }
                     else{
                         ((Item)holder).select.setSelected(true);
                         items.get(position).setSelect(true);
-
+                        final ParseUser p=ParseUser.getCurrentUser();
+                        final ParseRelation<ParseObject> relation=p.getRelation("My_memory");
+                        relation.getQuery().getInBackground(items.get(position).getObjectId(), new GetCallback<ParseObject>() {
+                            @Override
+                            public void done(ParseObject o, ParseException e) {
+                                o.put("isFamous",true);
+                                o.saveInBackground(new SaveCallback() {
+                                    @Override
+                                    public void done(ParseException e) {
+                                    }
+                                });
+                            }
+                        });
                     }
 
                 }
@@ -85,6 +119,7 @@ public class CardAdapter extends RecyclerView.Adapter {
                 @Override
                 public void onClick(View v) {
                     Intent intent=new Intent(context,CardDetailActivity.class);
+                    intent.putExtra("objectId",items.get(position).getObjectId());
                     intent.putExtra("image",items.get(position).getImage());
                     intent.putExtra("title",items.get(position).getText());
                     intent.putExtra("date",items.get(position).getDate());

@@ -2,13 +2,18 @@ package com.example.photori.photoribook;
 
 
 public class CardItem {
-    int image;
+    String objectId;
+    byte[] image;
     boolean isSelect;
     String date;
     String text;
     String detail;
 
-    public int getImage() {
+    public String getObjectId() {
+        return objectId;
+    }
+
+    public byte[] getImage() {
         return image;
     }
 
@@ -30,7 +35,8 @@ public class CardItem {
 
     public void setSelect(boolean isSelect) { this.isSelect=isSelect;}
 
-    public CardItem(int image,boolean isSelect,String date, String text,String detail){
+    public CardItem(String objectId, byte[] image, boolean isSelect, String date, String text, String detail){
+        this.objectId=objectId;
         this.image=image;
         this.isSelect=isSelect;
         this.date=date;
