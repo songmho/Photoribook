@@ -55,9 +55,13 @@ public class MemoryActivity extends AppCompatActivity {
             public void onDateSelected(@NonNull MaterialCalendarView widget, @NonNull CalendarDay date, boolean selected) {
                 items.clear();
                 String s="";
-                char [] date_array=date.toString().toCharArray();
-                s=s+date_array[12]+date_array[13]+date_array[14]+date_array[15]+"."+date_array[17]+(int)date_array[18]+"."+date_array[20]+date_array[21];
-                 ParseUser user=ParseUser.getCurrentUser();
+               if(date.getMonth()+1>12) {
+                   s=""+(date.getYear()+1)+"."+1+"."+date.getDay();
+                }
+                else{
+                   s=""+date.getYear()+"."+(date.getMonth()+1)+"."+date.getDay();
+               }
+                ParseUser user=ParseUser.getCurrentUser();
                 ParseRelation<ParseObject> relation=user.getRelation("My_memory");
                 ParseQuery<ParseObject> query=relation.getQuery();
                 query.whereEqualTo("Time",s);
