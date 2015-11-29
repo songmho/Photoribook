@@ -16,7 +16,11 @@ import android.widget.TextView;
 import android.widget.Toast;
 
 import com.bumptech.glide.Glide;
+import com.parse.FindCallback;
+import com.parse.ParseException;
 import com.parse.ParseFile;
+import com.parse.ParseObject;
+import com.parse.ParseQuery;
 import com.parse.ParseUser;
 
 import java.io.ByteArrayOutputStream;
@@ -24,6 +28,7 @@ import java.io.File;
 import java.io.FileNotFoundException;
 import java.io.FileOutputStream;
 import java.io.IOException;
+import java.util.List;
 
 import jp.wasabeef.glide.transformations.CropCircleTransformation;
 
@@ -80,6 +85,15 @@ public class MypageActivity extends AppCompatActivity {
             @Override
             public void onClick(View v) {
                 MakingAlertDialog();
+            }
+        });
+
+        ParseUser parseUser = ParseUser.getCurrentUser();
+        ParseQuery<ParseObject> parseQuery = parseUser.getRelation("My_memory").getQuery(); //파스오브젝트 찾기
+        parseQuery.findInBackground(new FindCallback<ParseObject>() {
+            @Override
+            public void done(List<ParseObject> list, ParseException e) {
+                total.setText("" + list.size());
             }
         });
     }
