@@ -43,11 +43,8 @@ public class MainActivity extends AppCompatActivity {
 
     Toolbar toolbar;
 
-    RecyclerView recyclerView;
     FloatingActionButton fab;
-
     FragmentTransaction fragmentTransaction;
-    ArrayList<CardItem> items=new ArrayList<>();
 
 
     @Override
@@ -72,7 +69,6 @@ public class MainActivity extends AppCompatActivity {
 
         drawerlayout=(DrawerLayout)findViewById(R.id.drawerlayout);
         navigationView=(NavigationView)findViewById(R.id.navigationView);
-        recyclerView=(RecyclerView)findViewById(R.id.recyclerView);
         fab=(FloatingActionButton)findViewById(R.id.fab);
         toolbar=(Toolbar)findViewById(R.id.toolbar);
         setSupportActionBar(toolbar);
@@ -111,10 +107,6 @@ public class MainActivity extends AppCompatActivity {
         name.setText(ParseUser.getCurrentUser().getString("name"));
 
 
-        recyclerView.setHasFixedSize(true);                             //리사이클러뷰 화면에 고정
-        RecyclerView.LayoutManager layoutManager=new LinearLayoutManager(getApplicationContext());
-        recyclerView.setLayoutManager(layoutManager);
-
         fab.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View v) {
@@ -127,44 +119,7 @@ public class MainActivity extends AppCompatActivity {
     @Override
     protected void onResume() {
         super.onResume();
-        items.clear();
 
-        Date d=new Date();
-        SimpleDateFormat f=new SimpleDateFormat("yyyy.MM.dd");
-        final byte[][] bytes = {new byte[10]};
-
-
-        ParseUser u=ParseUser.getCurrentUser();
-        ParseQuery<ParseObject> query= u.getRelation("My_memory").getQuery();
-        query.whereEqualTo("Time",f.format(d).toString());
-        query.findInBackground(new FindCallback<ParseObject>() {
-            @Override
-            public void done(List<ParseObject> list, ParseException e) {
-                if(list!=null && list.size()>0) {
-                    for (ParseObject o : list) {
-                        ParseFile file=(ParseFile)o.get("Photo");
-                        try {
-                            bytes[0] =file.getData();
-                        } catch (ParseException e1) {
-                            e1.printStackTrace();
-                        }
-
-                        CardItem item = new CardItem(o.getObjectId(),bytes[0], o.getBoolean("isFamous"), o.getString("Time"),
-                                    o.getString("Title"), o.getString("Detail"));
-
-                        items.add(item);
-                    }
-                    recyclerView.setAdapter(new CardAdapter(getApplicationContext(), items, R.layout.activity_main));
-                }
-                else{  CardItem item = new CardItem("", bytes[0],false,"2015.11.27",
-                        "추억을 남겨보세요", "오늘의 추억에 대해서 말해주세요");
-                    items.add(item);
-                recyclerView.setAdapter(new CardAdapter(getApplicationContext(), items, R.layout.activity_main));
-                }
-
-            }
-
-        });
     }
 
     private boolean clickDrawerMenu(MenuItem menuItem) {
@@ -188,6 +143,7 @@ public class MainActivity extends AppCompatActivity {
         menuItem.setChecked(true);
         switch (menuItem.getItemId()){
             case R.id.item_main:
+                startActivity(new Intent(MainActivity.this,TodayActivity.class));
                 drawerlayout.closeDrawers();
                 return true;
             case R.id.item_main2:
