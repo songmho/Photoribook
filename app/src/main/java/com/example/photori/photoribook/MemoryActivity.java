@@ -24,23 +24,13 @@ public class MemoryActivity extends AppCompatActivity {
         setSupportActionBar(toolbar);
         getSupportActionBar().setTitle("추억꺼내기");
         getSupportActionBar().setDisplayHomeAsUpEnabled(true);
-        if(isCalendar==true){
             Fragment newFragment =new CalendarFragment();
             FragmentTransaction transaction = getSupportFragmentManager()
                     .beginTransaction();
 
             transaction.replace(R.id.container, newFragment);
             transaction.commit();
-        }
-        else{
-            Fragment newFragment =new ListFragment();
-            FragmentTransaction transaction = getSupportFragmentManager()
-                    .beginTransaction();
 
-            transaction.replace(R.id.container, newFragment);
-            transaction.commit();
-
-        }
     }
 
     @Override
@@ -53,7 +43,28 @@ public class MemoryActivity extends AppCompatActivity {
     @Override
     public boolean onOptionsItemSelected(MenuItem item) {
         if(item.getItemId()==R.id.memory){
+            if(isCalendar){
 
+                Fragment newFragment =new ListFragment();
+                FragmentTransaction transaction = getSupportFragmentManager()
+                        .beginTransaction();
+
+                item.setIcon(R.drawable.calendar);
+                 transaction.replace(R.id.container, newFragment);
+                transaction.commit();
+
+                isCalendar=false;
+            }
+            else{
+
+                Fragment newFragment =new CalendarFragment();
+                FragmentTransaction transaction = getSupportFragmentManager()
+                        .beginTransaction();
+                item.setIcon(R.drawable.list);
+                transaction.replace(R.id.container, newFragment);
+                transaction.commit();
+                isCalendar=true;
+            }
         }
         return super.onOptionsItemSelected(item);
     }
