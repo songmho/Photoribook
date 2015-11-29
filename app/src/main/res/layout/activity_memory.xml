@@ -12,16 +12,10 @@
             android:id="@+id/toolbar"
             layout="@layout/tool_bar"
             />
-
-        <com.prolificinteractive.materialcalendarview.MaterialCalendarView
-            android:id="@+id/calendar"
+        <LinearLayout
+            android:id="@+id/container"
             android:layout_width="match_parent"
-            android:layout_height="wrap_content">
-
-        </com.prolificinteractive.materialcalendarview.MaterialCalendarView>
-    <android.support.v7.widget.RecyclerView
-        android:id="@+id/calendar_photo"
-        android:layout_width="match_parent"
-        android:layout_height="match_parent"/>
+            android:layout_height="match_parent"
+            android:orientation="vertical"/>
     </LinearLayout>
 </android.support.design.widget.CoordinatorLayout>
