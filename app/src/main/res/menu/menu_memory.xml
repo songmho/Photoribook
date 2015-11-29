@@ -5,6 +5,6 @@
     <item
         android:id="@+id/memory"
         android:title="달력"
-        android:icon="@drawable/calendar"
+        android:icon="@drawable/list"
         app:showAsAction="always"/>
 </menu>
