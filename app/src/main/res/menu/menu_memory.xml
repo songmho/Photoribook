@@ -1,7 +1,10 @@
 <?xml version="1.0" encoding="utf-8"?>
-<menu xmlns:android="http://schemas.android.com/apk/res/android">
+<menu xmlns:android="http://schemas.android.com/apk/res/android"
+    xmlns:app="http://schemas.android.com/apk/res-auto">
 
     <item
         android:id="@+id/memory"
-        android:title="달력"/>
+        android:title="달력"
+        android:icon="@drawable/calendar"
+        app:showAsAction="always"/>
 </menu>

@@ -12,6 +12,7 @@ import android.view.MenuItem;
 
 public class MemoryActivity extends AppCompatActivity {
     Toolbar toolbar;
+    boolean isCalendar=true;
 
     @Override
     protected void onCreate(@Nullable Bundle savedInstanceState) {
@@ -23,12 +24,23 @@ public class MemoryActivity extends AppCompatActivity {
         setSupportActionBar(toolbar);
         getSupportActionBar().setTitle("추억꺼내기");
         getSupportActionBar().setDisplayHomeAsUpEnabled(true);
-        Fragment newFragment =new ListFragment();
-        FragmentTransaction transaction = getSupportFragmentManager()
-                .beginTransaction();
+        if(isCalendar==true){
+            Fragment newFragment =new CalendarFragment();
+            FragmentTransaction transaction = getSupportFragmentManager()
+                    .beginTransaction();
 
-        transaction.replace(R.id.container, newFragment);
-        transaction.commit();
+            transaction.replace(R.id.container, newFragment);
+            transaction.commit();
+        }
+        else{
+            Fragment newFragment =new ListFragment();
+            FragmentTransaction transaction = getSupportFragmentManager()
+                    .beginTransaction();
+
+            transaction.replace(R.id.container, newFragment);
+            transaction.commit();
+
+        }
     }
 
     @Override
