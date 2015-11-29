@@ -10,8 +10,7 @@
         android:orientation="vertical">
         <include
             android:id="@+id/toolbar"
-            layout="@layout/tool_bar"
-            />
+            layout="@layout/tool_bar" />
         <LinearLayout
             android:id="@+id/container"
             android:layout_width="match_parent"
