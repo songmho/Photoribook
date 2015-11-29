@@ -1,12 +1,12 @@
 package com.example.photori.photoribook;
 
 public class CalendarPhotoItem{
-    int image;
+    byte[] image;
 
-    public int getImage() {
+    public byte[] getImage() {
         return image;
     }
-    public CalendarPhotoItem(int image){
+    public CalendarPhotoItem(byte[] image){
         this.image=image;
     }
 }

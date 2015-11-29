@@ -4,10 +4,13 @@ import android.content.Intent;
 import android.os.Bundle;
 import android.support.v7.app.AppCompatActivity;
 import android.support.v7.widget.Toolbar;
+import android.util.Log;
 import android.view.Menu;
 import android.view.MenuItem;
 import android.widget.ImageView;
 import android.widget.TextView;
+
+import com.bumptech.glide.Glide;
 
 public class CardDetailActivity extends AppCompatActivity {
 
@@ -31,6 +34,8 @@ public class CardDetailActivity extends AppCompatActivity {
         setSupportActionBar(toolbar);
         getSupportActionBar().setTitle(intent.getStringExtra("title"));
         getSupportActionBar().setDisplayHomeAsUpEnabled(true);
+        Glide.with(this).load(getIntent().getByteArrayExtra("image"))
+                .placeholder(R.drawable.edit_default).into(image);
 
         detail.setText(intent.getStringExtra("detail"));
         date.setText(intent.getStringExtra("date"));
@@ -48,6 +53,8 @@ public class CardDetailActivity extends AppCompatActivity {
     @Override
     public boolean onOptionsItemSelected(MenuItem item) {
         Intent intent=new Intent(CardDetailActivity.this,AddActivity.class);
+        intent.putExtra("objectId",getIntent().getStringExtra("objectId"));
+        intent.putExtra("image",getIntent().getByteArrayExtra("image"));
         intent.putExtra("title",getIntent().getStringExtra("title"));
         intent.putExtra("detail",getIntent().getStringExtra("detail"));
         intent.putExtra("date",getIntent().getStringExtra("date"));

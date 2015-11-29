@@ -63,9 +63,18 @@ public class MypageActivity extends AppCompatActivity {
         name.setText(ParseUser.getCurrentUser().getString("name"));
         email.setText(ParseUser.getCurrentUser().getEmail());
 
-        Glide.with(getApplicationContext()).load(R.drawable.ss).
+
+
+        String tempPath="data/data/com.example.photori.photoribook/files/profile.jpg";
+        Bitmap bm = BitmapFactory.decodeFile(tempPath);
+        if(bm!=null){
+            Glide.with(getApplicationContext()).load(bitmapTobyte(bm)).
+                    bitmapTransform(new CropCircleTransformation(getApplicationContext())).into(profile);
+}
+        else{        Glide.with(getApplicationContext()).load(R.drawable.ss).
                 bitmapTransform(new CropCircleTransformation(getApplicationContext())).into(profile);
 
+        }
 
         profile.setOnClickListener(new View.OnClickListener() {
             @Override
@@ -115,14 +124,19 @@ public class MypageActivity extends AppCompatActivity {
         if(resultCode==RESULT_OK && data!=null){
             if(requestCode==CAMERA_REQUEST){
                 thum=(Bitmap)data.getExtras().get("data");
-                profile.setImageBitmap(thum);
+            //    profile.setImageBitmap(thum);
+
+                Glide.with(getApplicationContext()).load(bitmapTobyte(thum)).
+                        bitmapTransform(new CropCircleTransformation(getApplicationContext())).into(profile);
+
                 imgSendParse(thum);
             }
             else if(requestCode==SELECT_FILE){
                 Uri uri=data.getData();
                 try {
                     thum = MediaStore.Images.Media.getBitmap(getContentResolver(),uri);
-                    profile.setImageBitmap(thum);
+                    Glide.with(getApplicationContext()).load(bitmapTobyte(thum)).
+                            bitmapTransform(new CropCircleTransformation(getApplicationContext())).into(profile);
                     imgSendParse(thum);
                 } catch (IOException e) {
                     e.printStackTrace();

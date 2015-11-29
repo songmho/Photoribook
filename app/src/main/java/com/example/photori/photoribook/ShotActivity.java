@@ -10,13 +10,12 @@ import android.widget.Toast;
 
 import com.parse.FindCallback;
 import com.parse.ParseException;
+import com.parse.ParseFile;
 import com.parse.ParseObject;
 import com.parse.ParseQuery;
 import com.parse.ParseUser;
 
-import java.text.SimpleDateFormat;
 import java.util.ArrayList;
-import java.util.Date;
 import java.util.List;
 
 
@@ -47,8 +46,8 @@ public class ShotActivity extends AppCompatActivity {
     protected void onResume() {
         super.onResume();
         items.clear();
-        Date d=new Date();
-        SimpleDateFormat f=new SimpleDateFormat("yyyy.MM.dd");
+
+        final byte[][] bytes = {new byte[10]};
 
         ParseUser u=ParseUser.getCurrentUser();
         ParseQuery<ParseObject> query= u.getRelation("My_memory").getQuery();
@@ -58,8 +57,16 @@ public class ShotActivity extends AppCompatActivity {
             public void done(List<ParseObject> list, ParseException e) {
                 if(list.size()>0 && list!=null) {
                     for (ParseObject o : list) {
-                        CardItem item = new CardItem(0, o.getBoolean("isFamous"), o.getString("Time"),
-                                o.getString("Title"), o.getString("Detail"));
+                        ParseFile file=(ParseFile)o.get("Photo");
+                        try {
+                            bytes[0] =file.getData();
+                        } catch (ParseException e1) {
+                            e1.printStackTrace();
+                        }
+
+                        CardItem item = new CardItem(o.getString("objectId"), bytes[0], o.getBoolean("isFamous"), o.getString("Time"),
+                                    o.getString("Title"), o.getString("Detail"));
+
                         items.add(item);
                     }
                     recyclerView.setAdapter(new CardAdapter(getApplicationContext(), items, R.layout.activity_main));
