@@ -28,6 +28,8 @@ import java.io.File;
 import java.io.FileNotFoundException;
 import java.io.FileOutputStream;
 import java.io.IOException;
+import java.text.SimpleDateFormat;
+import java.util.Date;
 import java.util.List;
 
 import jp.wasabeef.glide.transformations.CropCircleTransformation;
@@ -47,6 +49,9 @@ public class MypageActivity extends AppCompatActivity {
     CharSequence[] item={"카메라","갤러리에서 사진 가져오기","삭제"};
     File file_up_path=new File("data/data/com.example.photori.photoribook/files/");
     ParseUser user=ParseUser.getCurrentUser();
+    int count=0;
+    Date d = new Date();
+    SimpleDateFormat sdf = new SimpleDateFormat("yyyy.MM.dd");
 
 
     @Override
@@ -93,7 +98,14 @@ public class MypageActivity extends AppCompatActivity {
         parseQuery.findInBackground(new FindCallback<ParseObject>() {
             @Override
             public void done(List<ParseObject> list, ParseException e) {
+                count=0;
                 total.setText("" + list.size());
+                for(ParseObject o:list){
+                    if(o.getString("Time").equals(sdf.format(d).toString())){
+                        count++;
+                    }
+                }
+                today.setText(""+count);
             }
         });
     }
