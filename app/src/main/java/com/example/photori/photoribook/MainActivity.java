@@ -11,26 +11,23 @@ import android.support.v4.app.FragmentTransaction;
 import android.support.v4.view.GravityCompat;
 import android.support.v4.widget.DrawerLayout;
 import android.support.v7.app.AppCompatActivity;
-import android.support.v7.widget.LinearLayoutManager;
-import android.support.v7.widget.RecyclerView;
 import android.support.v7.widget.Toolbar;
 import android.view.KeyEvent;
 import android.view.MenuItem;
 import android.view.View;
+import android.widget.Button;
 import android.widget.ImageView;
 import android.widget.TextView;
 
 import com.bumptech.glide.Glide;
 import com.parse.FindCallback;
 import com.parse.ParseException;
-import com.parse.ParseFile;
 import com.parse.ParseObject;
 import com.parse.ParseQuery;
 import com.parse.ParseUser;
 
 import java.io.ByteArrayOutputStream;
 import java.text.SimpleDateFormat;
-import java.util.ArrayList;
 import java.util.Date;
 import java.util.List;
 
@@ -46,6 +43,12 @@ public class MainActivity extends AppCompatActivity {
     FloatingActionButton fab;
     FragmentTransaction fragmentTransaction;
 
+    TextView today_diary;
+    TextView date;
+    Button add_diary;
+
+    Date d = new Date();
+    SimpleDateFormat sdf = new SimpleDateFormat("yyyy.MM.dd");
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
@@ -62,16 +65,28 @@ public class MainActivity extends AppCompatActivity {
         else {
             count++;
         }SharedPreferences.Editor editor=shpref.edit();
-        editor.putInt("Count",count);
+        editor.putInt("Count", count);
         editor.commit();
 
         setContentView(R.layout.activity_main);
+
+        today_diary=(TextView)findViewById(R.id.today_diary);
+        date=(TextView)findViewById(R.id.date);
+        add_diary=(Button)findViewById(R.id.add_diary);
+        add_diary.setOnClickListener(new View.OnClickListener() {
+            @Override
+            public void onClick(View v) {
+                startActivity(new Intent(MainActivity.this, AddActivity.class));
+            }
+        });
 
         drawerlayout=(DrawerLayout)findViewById(R.id.drawerlayout);
         navigationView=(NavigationView)findViewById(R.id.navigationView);
         fab=(FloatingActionButton)findViewById(R.id.fab);
         toolbar=(Toolbar)findViewById(R.id.toolbar);
         setSupportActionBar(toolbar);
+
+        date.setText(sdf.format(d));
 
         navigationView.setNavigationItemSelectedListener(new NavigationView.OnNavigationItemSelectedListener() {
             @Override
@@ -119,6 +134,15 @@ public class MainActivity extends AppCompatActivity {
     @Override
     protected void onResume() {
         super.onResume();
+        ParseUser parseUser = ParseUser.getCurrentUser();
+        ParseQuery<ParseObject> parseQuery = parseUser.getRelation("My_memory").getQuery(); //파스오브젝트 찾기
+        parseQuery.whereEqualTo("Time",sdf.format(d).toString());
+        parseQuery.findInBackground(new FindCallback<ParseObject>() {
+            @Override
+            public void done(List<ParseObject> list, ParseException e) {
+                today_diary.setText(""+list.size());
+            }
+        });
 
     }
 
@@ -170,7 +194,7 @@ public class MainActivity extends AppCompatActivity {
 
 
     @Override
-    public boolean onKeyDown(int keyCode, KeyEvent event) {
+    public boolean onKeyDown(int keyCode, KeyEvent event) {//뒤로 가기 할때, 꺼지지 않게 하기
 
         switch (keyCode) {
             case KeyEvent.KEYCODE_BACK:
@@ -187,7 +211,7 @@ public class MainActivity extends AppCompatActivity {
     }
 
 
-    private byte[] bitmapTobyte(Bitmap bm) {
+    private byte[] bitmapTobyte(Bitmap bm) {//비트맵을 바이트로 바꿔서 이미지 불러오기
         ByteArrayOutputStream stream=new ByteArrayOutputStream();
         bm.compress(Bitmap.CompressFormat.JPEG, 50, stream);
         byte[] bytes=stream.toByteArray();
