@@ -19,9 +19,6 @@ import java.util.ArrayList;
 import java.util.Date;
 import java.util.List;
 
-/**
- * Created by songmho on 15. 11. 29..
- */
 public class TodayActivity extends AppCompatActivity {
 
     RecyclerView recyclerView;

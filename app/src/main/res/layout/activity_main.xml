@@ -16,7 +16,7 @@
         android:layout_width="match_parent"
         android:layout_height="match_parent"
         android:orientation="vertical"
-        android:background="@color/colorSecond">
+        >
 
         <include
             android:id="@+id/toolbar"
@@ -26,7 +26,8 @@
             android:layout_width="match_parent"
             android:layout_height="match_parent"
             android:orientation="vertical"
-            android:gravity="center">
+            android:gravity="center"
+            android:background="@color/colorSecond">
         <TextView
             android:textSize="25dp"
             android:text="오늘의 일기"
@@ -63,14 +64,6 @@
         </LinearLayout>
 
     </LinearLayout>
-        <android.support.design.widget.FloatingActionButton
-            android:src="@drawable/edit_button"
-            android:id="@+id/fab"
-            android:layout_width="wrap_content"
-            android:layout_height="wrap_content"
-            app:fabSize="normal"
-            android:layout_margin="15dp"
-            android:layout_gravity="bottom|right"/>
     </android.support.design.widget.CoordinatorLayout>
 
     <android.support.design.widget.NavigationView

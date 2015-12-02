@@ -5,7 +5,6 @@ import android.content.SharedPreferences;
 import android.graphics.Bitmap;
 import android.graphics.BitmapFactory;
 import android.os.Bundle;
-import android.support.design.widget.FloatingActionButton;
 import android.support.design.widget.NavigationView;
 import android.support.v4.app.FragmentTransaction;
 import android.support.v4.view.GravityCompat;
@@ -41,7 +40,6 @@ public class MainActivity extends AppCompatActivity {
 
     Toolbar toolbar;
 
-    FloatingActionButton fab;
     FragmentTransaction fragmentTransaction;
 
     TextView today_diary;
@@ -85,7 +83,6 @@ public class MainActivity extends AppCompatActivity {
 
         drawerlayout=(DrawerLayout)findViewById(R.id.drawerlayout);
         navigationView=(NavigationView)findViewById(R.id.navigationView);
-        fab=(FloatingActionButton)findViewById(R.id.fab);
         toolbar=(Toolbar)findViewById(R.id.toolbar);
         setSupportActionBar(toolbar);
 
@@ -110,12 +107,6 @@ public class MainActivity extends AppCompatActivity {
         name = (TextView) navigationView.findViewById(R.id.name);
         profile=(ImageView)navigationView.findViewById(R.id.profile);
 
-        fab.setOnClickListener(new View.OnClickListener() {
-            @Override
-            public void onClick(View v) {
-                startActivity(new Intent(MainActivity.this, AddActivity.class));
-            }
-        });
     }   //onCreate
 
 

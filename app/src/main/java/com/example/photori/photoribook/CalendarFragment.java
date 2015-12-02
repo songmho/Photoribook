@@ -26,9 +26,6 @@ import com.prolificinteractive.materialcalendarview.OnDateSelectedListener;
 import java.util.ArrayList;
 import java.util.List;
 
-/**
- * Created by songmho on 15. 11. 29..
- */
 public class CalendarFragment extends Fragment {
     MaterialCalendarView calendar;
     RecyclerView calendar_photo;
