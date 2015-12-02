@@ -9,6 +9,9 @@ import android.support.v7.widget.Toolbar;
 import android.view.View;
 import android.widget.Button;
 import android.widget.TextView;
+import android.widget.Toast;
+
+import com.parse.ParseUser;
 
 import org.w3c.dom.Text;
 
@@ -41,6 +44,10 @@ public class SettingActivity extends AppCompatActivity{
         logout_button.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View v) {
+                if(ParseUser.getCurrentUser()!=null)
+                    ParseUser.getCurrentUser().logOutInBackground();
+                else
+                    Toast.makeText(SettingActivity.this, "로그인이 되어있지 않습니다.", Toast.LENGTH_SHORT).show();
                 startActivity(new Intent(SettingActivity.this, LoginActivity.class));
                 finish();
             }

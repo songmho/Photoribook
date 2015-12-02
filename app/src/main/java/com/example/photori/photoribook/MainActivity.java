@@ -18,6 +18,7 @@ import android.view.View;
 import android.widget.Button;
 import android.widget.ImageView;
 import android.widget.TextView;
+import android.widget.Toast;
 
 import com.bumptech.glide.Glide;
 import com.parse.FindCallback;
@@ -50,13 +51,15 @@ public class MainActivity extends AppCompatActivity {
     Date d = new Date();
     SimpleDateFormat sdf = new SimpleDateFormat("yyyy.MM.dd");
 
+    TextView name;
+    ImageView profile;
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
         SharedPreferences shpref=getSharedPreferences("myPref",0);
         //앱 종료 여부에 상관하지 않고 값을 저장하고 싶을때
         int count=shpref.getInt("Count",-100);
-        if(count==-100 || ParseUser.getCurrentUser()==null){
+        if(ParseUser.getCurrentUser()==null){
             startActivity(new Intent(MainActivity.this, SplashActivity.class));
             finish();
             count=1;
@@ -96,7 +99,6 @@ public class MainActivity extends AppCompatActivity {
         });
 
         toolbar.setNavigationIcon(R.drawable.drawericon);           //액션바에 서랍버튼 넣기
-        //toolbar.setLogo(R.drawable.photoribook_logomain);
 
         toolbar.setNavigationOnClickListener(new View.OnClickListener() {
             @Override
@@ -105,22 +107,8 @@ public class MainActivity extends AppCompatActivity {
             }
         });
 
-        TextView name = (TextView) navigationView.findViewById(R.id.name);
-        ImageView profile=(ImageView)navigationView.findViewById(R.id.profile);
-
-        String tempPath="data/data/com.example.photori.photoribook/files/profile.jpg";
-        Bitmap bm = BitmapFactory.decodeFile(tempPath);
-        if(bm!=null){
-            Glide.with(getApplicationContext()).load(bitmapTobyte(bm)).
-                    bitmapTransform(new CropCircleTransformation(getApplicationContext())).into(profile);
-        }
-        else{        Glide.with(getApplicationContext()).load(R.drawable.ss).
-                bitmapTransform(new CropCircleTransformation(getApplicationContext())).into(profile);
-
-        }
-
-        name.setText(ParseUser.getCurrentUser().getString("name"));
-
+        name = (TextView) navigationView.findViewById(R.id.name);
+        profile=(ImageView)navigationView.findViewById(R.id.profile);
 
         fab.setOnClickListener(new View.OnClickListener() {
             @Override
@@ -135,14 +123,37 @@ public class MainActivity extends AppCompatActivity {
     protected void onResume() {
         super.onResume();
         ParseUser parseUser = ParseUser.getCurrentUser();
-        ParseQuery<ParseObject> parseQuery = parseUser.getRelation("My_memory").getQuery(); //파스오브젝트 찾기
-        parseQuery.whereEqualTo("Time",sdf.format(d).toString());
-        parseQuery.findInBackground(new FindCallback<ParseObject>() {
-            @Override
-            public void done(List<ParseObject> list, ParseException e) {
-                today_diary.setText(""+list.size());
+        if(parseUser!=null) {
+            ParseQuery<ParseObject> parseQuery = parseUser.getRelation("My_memory").getQuery(); //파스오브젝트 찾기
+            parseQuery.whereEqualTo("Time", sdf.format(d).toString());
+            parseQuery.findInBackground(new FindCallback<ParseObject>() {
+                @Override
+                public void done(List<ParseObject> list, ParseException e) {
+                    if(list!=null || list.size()>0){
+                        today_diary.setText("" + list.size());
+                    }
+                    else if(list==null || list.size()<=0)
+                        today_diary.setText("0");
+                }
+            });
+
+            String tempPath="data/data/com.example.photori.photoribook/files/profile.jpg";
+            Bitmap bm = BitmapFactory.decodeFile(tempPath);
+            if(bm!=null){
+                Glide.with(getApplicationContext()).load(bitmapTobyte(bm)).
+                        bitmapTransform(new CropCircleTransformation(getApplicationContext())).into(profile);
             }
-        });
+            else{        Glide.with(getApplicationContext()).load(R.drawable.ss).
+                    bitmapTransform(new CropCircleTransformation(getApplicationContext())).into(profile);
+
+            }
+
+            name.setText(ParseUser.getCurrentUser().getString("name"));
+        }
+        else{
+            name.setText("");
+            Glide.with(getApplicationContext()).load(R.drawable.ss).bitmapTransform(new CropCircleTransformation(getApplicationContext())).into(profile);
+        }
 
     }
 
@@ -167,19 +178,43 @@ public class MainActivity extends AppCompatActivity {
         menuItem.setChecked(true);
         switch (menuItem.getItemId()){
             case R.id.item_main:
-                startActivity(new Intent(MainActivity.this,TodayActivity.class));
+                if(ParseUser.getCurrentUser()!=null)
+                    startActivity(new Intent(MainActivity.this,TodayActivity.class));
+                else {
+                    Toast.makeText(getApplicationContext(), "로그인 해주세요.", Toast.LENGTH_SHORT).show();
+                    startActivity(new Intent(MainActivity.this,LoginActivity.class));
+                    finish();
+                }
                 drawerlayout.closeDrawers();
                 return true;
             case R.id.item_main2:
-                startActivity(new Intent(MainActivity.this,MemoryActivity.class));
+                if(ParseUser.getCurrentUser()!=null)
+                    startActivity(new Intent(MainActivity.this,MemoryActivity.class));
+                else {
+                    Toast.makeText(getApplicationContext(), "로그인 해주세요.", Toast.LENGTH_SHORT).show();
+                    startActivity(new Intent(MainActivity.this,LoginActivity.class));
+                    finish();
+                }
                 drawerlayout.closeDrawers();
                 return true;
             case R.id.item_main3:
-                startActivity(new Intent(MainActivity.this,ShotActivity.class));
+                if(ParseUser.getCurrentUser()!=null)
+                    startActivity(new Intent(MainActivity.this,ShotActivity.class));
+                else {
+                    Toast.makeText(getApplicationContext(), "로그인 해주세요.", Toast.LENGTH_SHORT).show();
+                    startActivity(new Intent(MainActivity.this,LoginActivity.class));
+                    finish();
+                }
                 drawerlayout.closeDrawers();
                 return true;
             case R.id.item_mypage:
-                startActivity(new Intent(MainActivity.this,MypageActivity.class));
+                if(ParseUser.getCurrentUser()!=null)
+                    startActivity(new Intent(MainActivity.this,MypageActivity.class));
+                else {
+                    Toast.makeText(getApplicationContext(), "로그인 해주세요.", Toast.LENGTH_SHORT).show();
+                    startActivity(new Intent(MainActivity.this,LoginActivity.class));
+                    finish();
+                }
                 drawerlayout.closeDrawers();
                 return true;
             case R.id.setup:
