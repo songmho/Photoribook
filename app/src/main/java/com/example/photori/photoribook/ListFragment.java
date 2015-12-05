@@ -48,6 +48,7 @@ public class ListFragment extends Fragment {
 
         ParseUser u=ParseUser.getCurrentUser();
         ParseQuery<ParseObject> query= u.getRelation("My_memory").getQuery();
+        query.addDescendingOrder("Time");
         query.findInBackground(new FindCallback<ParseObject>() {
             @Override
             public void done(List<ParseObject> list, ParseException e) {

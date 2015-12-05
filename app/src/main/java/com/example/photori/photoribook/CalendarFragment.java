@@ -33,6 +33,8 @@ public class CalendarFragment extends Fragment {
     ArrayList<CalendarPhotoItem> items=new ArrayList<>();
 
     LinearLayout cur_layout;
+
+
     @Override
     public void onCreate(@Nullable Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
@@ -59,11 +61,18 @@ public class CalendarFragment extends Fragment {
             public void onDateSelected(@NonNull MaterialCalendarView widget, @NonNull CalendarDay date, boolean selected) {
                 items.clear();
                 String s="";
+                final byte[][] bytes = {new byte[10]};
                 if(date.getMonth()+1>12) {
-                    s=""+(date.getYear()+1)+"."+1+"."+date.getDay();
+                    if(date.getDay()<10)
+                        s=""+(date.getYear()+1)+"."+1+"."+"0"+date.getDay();
+                    else
+                        s=""+(date.getYear()+1)+"."+1+"."+date.getDay();
                 }
                 else{
-                    s=""+date.getYear()+"."+(date.getMonth()+1)+"."+date.getDay();
+                    if(date.getDay()<10)
+                        s=""+date.getYear()+"."+(date.getMonth()+1)+"."+"0"+date.getDay();
+                    else
+                        s=""+date.getYear()+"."+(date.getMonth()+1)+"."+date.getDay();
                 }
                 ParseUser user=ParseUser.getCurrentUser();
                 ParseRelation<ParseObject> relation=user.getRelation("My_memory");
@@ -73,14 +82,14 @@ public class CalendarFragment extends Fragment {
                     @Override
                     public void done(List<ParseObject> list, ParseException e) {
                         for(ParseObject o:list){
-                            byte[] bytes= new byte[10];
                             ParseFile file=(ParseFile)o.get("Photo");
                             try {
-                                bytes =file.getData();
+                                bytes[0] =file.getData();
                             } catch (ParseException e1) {
                                 e1.printStackTrace();
                             }
-                            CalendarPhotoItem item = new CalendarPhotoItem(bytes);
+                            CalendarPhotoItem item = new CalendarPhotoItem(o.getObjectId(), bytes[0], o.getBoolean("isFamous"), o.getString("Time"),
+                                    o.getString("Title"), o.getString("Detail"));
                             items.add(item);
                         }
                         calendar_photo.setAdapter(new CalendarPhotoAdapter(getActivity().getApplicationContext(),items));

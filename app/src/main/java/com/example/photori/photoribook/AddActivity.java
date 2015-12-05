@@ -92,7 +92,7 @@ public class AddActivity extends AppCompatActivity {
                 final ParseRelation<ParseObject> relation=p.getRelation("My_memory");
                 relation.getQuery().getInBackground(getIntent().getStringExtra("objectId"), new GetCallback<ParseObject>() {
                     @Override
-                    public void done(ParseObject o, ParseException e) {
+                    public void done(final ParseObject o, ParseException e) {
                         if(o==null)
                             Log.d("ddd","fffffff");
                         ParseFile photo=new ParseFile("photo.jpg",bitmapTobyte(bitmap));
@@ -104,12 +104,20 @@ public class AddActivity extends AppCompatActivity {
                         o.saveInBackground(new SaveCallback() {
                             @Override
                             public void done(ParseException e) {
+                                Intent intent=new Intent(AddActivity.this,CardDetailActivity.class);
+
+                                intent.putExtra("objectId",o.getObjectId());
+                                intent.putExtra("image",bitmapTobyte(bitmap));
+                                intent.putExtra("title",title_edit.getText().toString());
+                                intent.putExtra("date",getIntent().getStringExtra("date"));
+                                intent.putExtra("detail",detail_edit.getText().toString());
+                                startActivity(intent);
+                                finish();
                             }
                         });
                     }
                 });
 
-                finish();
                 return true;
             }
             else {
@@ -131,11 +139,18 @@ public class AddActivity extends AppCompatActivity {
 
                         relation.add(o);
                         p.saveInBackground();
+                        Intent intent=new Intent(AddActivity.this,CardDetailActivity.class);
+
+                        intent.putExtra("objectId",o.getObjectId());
+                        intent.putExtra("image",bitmapTobyte(bitmap));
+                        intent.putExtra("title",title_edit.getText().toString());
+                        intent.putExtra("date",getIntent().getStringExtra("date"));
+                        intent.putExtra("detail",detail_edit.getText().toString());
+                        startActivity(intent);
+                        finish();
                     }
                 });
-                //  o.saveInBackground();
             }
-            finish();
             return true;
         }
         return super.onOptionsItemSelected(item);
