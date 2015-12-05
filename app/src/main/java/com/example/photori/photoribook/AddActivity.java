@@ -19,10 +19,12 @@ import android.widget.ImageView;
 import android.widget.Toast;
 
 import com.bumptech.glide.Glide;
+import com.parse.FindCallback;
 import com.parse.GetCallback;
 import com.parse.ParseException;
 import com.parse.ParseFile;
 import com.parse.ParseObject;
+import com.parse.ParseQuery;
 import com.parse.ParseRelation;
 import com.parse.ParseUser;
 import com.parse.SaveCallback;
@@ -30,6 +32,7 @@ import com.parse.SaveCallback;
 import java.io.ByteArrayOutputStream;
 import java.text.SimpleDateFormat;
 import java.util.Date;
+import java.util.List;
 
 public class AddActivity extends AppCompatActivity {
     private static int RESULT_LOAD_IMAGE = 1;
@@ -39,6 +42,8 @@ public class AddActivity extends AppCompatActivity {
     EditText detail_edit;
 
     Bitmap bitmap;
+
+    boolean isChangeImg=false;
 
     private String picturePath = "";
 
@@ -90,31 +95,38 @@ public class AddActivity extends AppCompatActivity {
             if(getIntent().getAction()=="android.intent.action.edit"){
                 final ParseUser p=ParseUser.getCurrentUser();
                 final ParseRelation<ParseObject> relation=p.getRelation("My_memory");
-                relation.getQuery().getInBackground(getIntent().getStringExtra("objectId"), new GetCallback<ParseObject>() {
+                ParseQuery<ParseObject> query=relation.getQuery();
+                query.whereEqualTo("objectId",getIntent().getStringExtra("objectId"));
+                query.findInBackground(new FindCallback<ParseObject>() {
                     @Override
-                    public void done(final ParseObject o, ParseException e) {
-                        if(o==null)
-                            Log.d("ddd","fffffff");
-                        ParseFile photo=new ParseFile("photo.jpg",bitmapTobyte(bitmap));
-                        o.put("Photo",photo);
-                        o.put("Title",title_edit.getText().toString());
-                        o.put("Time",getIntent().getStringExtra("date"));
-                        o.put("Detail",detail_edit.getText().toString());
-                        o.put("isFamous",false);
-                        o.saveInBackground(new SaveCallback() {
-                            @Override
-                            public void done(ParseException e) {
-                                Intent intent=new Intent(AddActivity.this,CardDetailActivity.class);
-
-                                intent.putExtra("objectId",o.getObjectId());
-                                intent.putExtra("image",bitmapTobyte(bitmap));
-                                intent.putExtra("title",title_edit.getText().toString());
-                                intent.putExtra("date",getIntent().getStringExtra("date"));
-                                intent.putExtra("detail",detail_edit.getText().toString());
-                                startActivity(intent);
-                                finish();
+                    public void done(List<ParseObject> list, ParseException e) {
+                        final ParseObject o=list.get(0);
+                        {
+                            if(o==null)
+                                Log.d("ddd","fffffff");
+                            if(isChangeImg) {
+                                ParseFile photo = new ParseFile("photo.jpg", bitmapTobyte(bitmap));
+                                o.put("Photo", photo);
                             }
-                        });
+                            if(!getIntent().getStringExtra("title").equals(title_edit.getText().toString()))
+                                o.put("Title",title_edit.getText().toString());
+                            if(!getIntent().getStringExtra("detail").equals(detail_edit.getText().toString()))
+                                o.put("Detail",detail_edit.getText().toString());
+                            o.saveInBackground(new SaveCallback() {
+                                @Override
+                                public void done(ParseException e) {
+                                    Intent intent=new Intent(AddActivity.this,CardDetailActivity.class);
+
+                                    intent.putExtra("objectId",o.getObjectId());
+                                    intent.putExtra("image",bitmapTobyte(bitmap));
+                                    intent.putExtra("title",title_edit.getText().toString());
+                                    intent.putExtra("date",getIntent().getStringExtra("date"));
+                                    intent.putExtra("detail",detail_edit.getText().toString());
+                                    startActivity(intent);
+                                    finish();
+                                }
+                            });
+                        }
                     }
                 });
 
@@ -172,6 +184,9 @@ public class AddActivity extends AppCompatActivity {
             ImageView imageView=(ImageView)findViewById(R.id.image);
             bitmap=BitmapFactory.decodeFile(picturePath);
             imageView.setImageBitmap(bitmap);
+
+            if(getIntent().getAction()=="android.itent.action.edit")
+                isChangeImg=true;
         }
     }
 

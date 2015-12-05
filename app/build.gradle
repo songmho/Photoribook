@@ -8,11 +8,11 @@ android {
         mavenCentral()
     }
     defaultConfig {
-        applicationId "com.example.photori.photoribook"
-        minSdkVersion 22
+        applicationId "com.photori.photoribook"
+        minSdkVersion 16
         targetSdkVersion 22
         versionCode 1
-        versionName "0.3"
+        versionName "0.70"
     }
     buildTypes {
         release {

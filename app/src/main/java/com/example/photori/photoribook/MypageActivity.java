@@ -47,7 +47,7 @@ public class MypageActivity extends AppCompatActivity {
     int CAMERA_REQUEST=1000;
     int SELECT_FILE=2000;
     CharSequence[] item={"카메라","갤러리에서 사진 가져오기","삭제"};
-    File file_up_path=new File("data/data/com.example.photori.photoribook/files/");
+    File file_up_path=new File("data/data/com.photori.photoribook/files/");
     ParseUser user=ParseUser.getCurrentUser();
     int count=0;
     Date d = new Date();
@@ -75,7 +75,7 @@ public class MypageActivity extends AppCompatActivity {
 
 
 
-        String tempPath="data/data/com.example.photori.photoribook/files/profile.jpg";
+        String tempPath="data/data/com.photori.photoribook/files/profile.jpg";
         Bitmap bm = BitmapFactory.decodeFile(tempPath);
         if(bm!=null){
             Glide.with(getApplicationContext()).load(bitmapTobyte(bm)).

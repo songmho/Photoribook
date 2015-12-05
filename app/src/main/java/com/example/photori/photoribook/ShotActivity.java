@@ -64,7 +64,7 @@ public class ShotActivity extends AppCompatActivity {
                             e1.printStackTrace();
                         }
 
-                        CardItem item = new CardItem(o.getString("objectId"), bytes[0], o.getBoolean("isFamous"), o.getString("Time"),
+                        CardItem item = new CardItem(o.getObjectId(), bytes[0], o.getBoolean("isFamous"), o.getString("Time"),
                                     o.getString("Title"), o.getString("Detail"));
 
                         items.add(item);

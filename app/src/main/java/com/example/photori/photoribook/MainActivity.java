@@ -128,7 +128,7 @@ public class MainActivity extends AppCompatActivity {
                 }
             });
 
-            String tempPath="data/data/com.example.photori.photoribook/files/profile.jpg";
+            String tempPath="data/data/com.photori.photoribook/files/profile.jpg";
             Bitmap bm = BitmapFactory.decodeFile(tempPath);
             if(bm!=null){
                 Glide.with(getApplicationContext()).load(bitmapTobyte(bm)).
