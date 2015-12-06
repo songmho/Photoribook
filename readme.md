@@ -1,6 +1,5 @@
 Photoribook v.0.70
-------------------
----
+==================
  포토리북은 사진찍는 것을 좋아하는 개발자가 인스타그램의 공개성에 문제점을 느껴 인스타그램의 개인화라는 컨셉으로 오늘의 사진 일기라는 주제를 가지고 만든 앱입니다.
 
 Build
@@ -12,7 +11,7 @@ Build
 
 
 App - dependencies 
-------------
+------------------
   - 'com.android.support:appcompat-v7:23.1.0'
   - 'com.android.support:design:23.0.1'
   - 'com.android.support:cardview-v7:23.0.1'
@@ -26,7 +25,7 @@ App - dependencies
 
 Install
 -------
-  - DropBox: https://www.dropbox.com/s/nt3c8p28gu2yksn/app-release.apk?dl=0
+  - DropBox: A [link] (https://www.dropbox.com/s/nt3c8p28gu2yksn/app-release.apk?dl=0)
   - playstore : 추후 출시 예정(12월 중순)
 
 사용방법
