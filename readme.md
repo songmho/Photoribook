@@ -25,7 +25,7 @@ App - dependencies
 
 Install
 -------
-  - DropBox: A [link] (https://www.dropbox.com/s/nt3c8p28gu2yksn/app-release.apk?dl=0)
+  - DropBox:  [https://www.dropbox.com/s/nt3c8p28gu2yksn/app-release.apk?dl=0] (https://www.dropbox.com/s/nt3c8p28gu2yksn/app-release.apk?dl=0)
   - playstore : 추후 출시 예정(12월 중순)
 
 사용방법
